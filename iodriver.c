@@ -7,6 +7,8 @@
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset){ return 0; }
 static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset){ return 0; }
+void create_devFiles(int major){};
+void remove_devFiles(int major){};
 
 struct file_operations fops = 
 {
