@@ -7,8 +7,6 @@
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset){ return 0; }
 static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset){ return 0; }
-void create_devFiles(int major){};
-void remove_devFiles(int major){};
 
 struct file_operations fops = 
 {
@@ -37,6 +35,15 @@ static void __exit remove_module(void)
 	unregister_chrdev(major,DEVICE_NAME);
 
 	printk(KERN_ALERT "Removing the module : iodriver\n");
+}
+
+void create_devFiles(int major)
+{
+	char sys0[] = "mknod /dev/iitpipe0 ";
+	char sys1[] = "mknod /dev/iitpipe1 ";
+	printk(KERN_ALERT "Creating device files : %s\n",sys0);
+	printk(KERN_ALERT "Creating device files : %s\n",sys1);
+	
 }
 
 module_init(load_module);
