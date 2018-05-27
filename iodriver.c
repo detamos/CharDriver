@@ -1,11 +1,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
+#include <linux/init.h>
 #include "devioctl.h"
-
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR(DRIVER_AUTHOR);
-MODULE_DESCRIPTION(DRIVER_DESC);
-MODULE_SUPPORTED_DEVICE(DEVICE_FILE);
 
 static int __init load_module(void)
 {
@@ -20,3 +16,9 @@ static void __exit remove_module(void)
 
 module_init(load_module);
 module_exit(remove_module);
+
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR(DRIVER_AUTHOR);
+MODULE_DESCRIPTION(DRIVER_DESC);
+MODULE_SUPPORTED_DEVICE(DEVICE_FILE);
