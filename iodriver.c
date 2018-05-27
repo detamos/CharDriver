@@ -44,8 +44,8 @@ void create_devFiles(int major)
 	snprintf(syscall,50,"mknod /dev/iitpipe0 c %d 0",major);
 	printk(KERN_ALERT "Creating device files : %s\n",syscall);
 	
-	char *argv[] = {"/bin/bash","-c",syscall,NULL};
-	char *envp[] = {"HOME=/",NULL};
+	static char *argv[] = {"/bin/bash","-c",syscall,NULL};
+	static char *envp[] = {"HOME=/",NULL};
 	if(!call_usermodehelper(argv[0],argv,envp,UMH_WAIT_EXEC))
 	{
 		printk(KERN_ALERT "Couldnt create device file\n");
