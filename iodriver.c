@@ -39,20 +39,11 @@ static void __exit remove_module(void)
 
 void create_devFiles(int major)
 {
-	char sys0[] = "mknod /dev/iitpipe0 ";
-	char sys1[] = "mknod /dev/iitpipe1 ";
-	char major_char[20];
-	int i = 0,num = major;
-	while(num)
-	{
-		major_char[i++] = (char)((num%10) + '0');
-		num /= 10;
-	}
-	major_char[i] = '\0';
-	strcat(sys0,major_char);
-	strcat(sys1,major_char);
-	printk(KERN_ALERT "Creating device files : %s\n",sys0);
-	printk(KERN_ALERT "Creating device files : %s\n",sys1);
+	char syscall[50];
+	snprintf(syscall,50,"mknod /dev/iitpipe0 c %d 0\n",major);
+	printk(KERN_ALERT "Creating device files : %s\n",syscall);
+	snprintf(syscall,50,"mknod /dev/iitpipe1 c %d 1\n",major);
+	printk(KERN_ALERT "Creating device files : %s\n",syscall);
 }
 
 void remove_devFiles(int major)
