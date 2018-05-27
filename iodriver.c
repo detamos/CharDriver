@@ -5,8 +5,8 @@
 #include <asm/uaccess.h>
 #include "devioctl.h"
 
-static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset){}
-static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset){}
+static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset){ return 0; }
+static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset){ return 0; }
 
 struct file_operations fops = 
 {
