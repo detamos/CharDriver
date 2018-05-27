@@ -1,9 +1,12 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/init.h>
+#include <linux/fs.h>
+#include <asm/uaccess.h>
 #include "devioctl.h"
 
-
+static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset){}
+static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset){}
 
 struct file_operations fops = 
 {
@@ -29,7 +32,8 @@ static int __init load_module(void)
 static void __exit remove_module(void)
 {
 	remove_devFiles(major);
-	
+	unregister_chrdev(major,DEVICE_NAME);
+
 	printk(KERN_ALERT "Removing the module : iodriver\n");
 }
 
