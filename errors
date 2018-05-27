@@ -1,0 +1,52 @@
+make -C /lib/modules/4.15.0-22-generic/build M=/home/detamos/cs307 modules
+make[1]: Entering directory '/usr/src/linux-headers-4.15.0-22-generic'
+  CC [M]  /home/detamos/cs307/iodriver.o
+In file included from /home/detamos/cs307/iodriver.c:4:0:
+/home/detamos/cs307/devioctl.h:11:20: warning: initialization makes integer from pointer without a cast [-Wint-conversion]
+ const char SPACE = " ";
+                    ^~~
+/home/detamos/cs307/devioctl.h:11:20: error: initializer element is not computable at load time
+/home/detamos/cs307/devioctl.h:12:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before string constant
+ const DEVICE_FILE1 "/dev/iitpipe0";
+                    ^~~~~~~~~~~~~~~
+/home/detamos/cs307/devioctl.h:13:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before string constant
+ const DEVICE_FILE2 "/dev/iitpipe1";
+                    ^~~~~~~~~~~~~~~
+/home/detamos/cs307/iodriver.c:8:8: error: variable ‘fops’ has initializer but incomplete type
+ struct file_operations fops =
+        ^~~~~~~~~~~~~~~
+/home/detamos/cs307/iodriver.c:10:3: error: ‘struct file_operations’ has no member named ‘read’
+  .read = device_read,
+   ^~~~
+/home/detamos/cs307/iodriver.c:10:10: error: ‘device_read’ undeclared here (not in a function); did you mean ‘apic_read’?
+  .read = device_read,
+          ^~~~~~~~~~~
+          apic_read
+/home/detamos/cs307/iodriver.c:10:10: warning: excess elements in struct initializer
+/home/detamos/cs307/iodriver.c:10:10: note: (near initialization for ‘fops’)
+/home/detamos/cs307/iodriver.c:11:3: error: ‘struct file_operations’ has no member named ‘write’
+  .write = device_write
+   ^~~~~
+/home/detamos/cs307/iodriver.c:11:11: error: ‘device_write’ undeclared here (not in a function); did you mean ‘device_read’?
+  .write = device_write
+           ^~~~~~~~~~~~
+           device_read
+/home/detamos/cs307/iodriver.c:11:11: warning: excess elements in struct initializer
+/home/detamos/cs307/iodriver.c:11:11: note: (near initialization for ‘fops’)
+/home/detamos/cs307/iodriver.c: In function ‘load_module’:
+/home/detamos/cs307/iodriver.c:17:10: error: implicit declaration of function ‘register_chrdev’; did you mean ‘register_sysctl’? [-Werror=implicit-function-declaration]
+  major = register_chrdev(0, DEVICE_NAME, &fops);
+          ^~~~~~~~~~~~~~~
+          register_sysctl
+/home/detamos/cs307/iodriver.c: At top level:
+/home/detamos/cs307/iodriver.c:8:24: error: storage size of ‘fops’ isn’t known
+ struct file_operations fops =
+                        ^~~~
+cc1: some warnings being treated as errors
+scripts/Makefile.build:339: recipe for target '/home/detamos/cs307/iodriver.o' failed
+make[2]: *** [/home/detamos/cs307/iodriver.o] Error 1
+Makefile:1552: recipe for target '_module_/home/detamos/cs307' failed
+make[1]: *** [_module_/home/detamos/cs307] Error 2
+make[1]: Leaving directory '/usr/src/linux-headers-4.15.0-22-generic'
+Makefile:5: recipe for target 'all' failed
+make: *** [all] Error 2
