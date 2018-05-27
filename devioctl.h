@@ -3,9 +3,17 @@
 
 #include <linux/ioctl.h>
 
-#define MAJOR_NUM 244
+static int major;
+
 #define DEVICE_NAME "iodriver"
-#define DEVICE_FILE1 "iitpipe0"
-#define DEVICE_FILE2 "iitpipe1"
+const char MKNOD[] = "mknod";
+const char RM[] = "rm";
+const char SPACE = " ";
+const DEVICE_FILE1 "/dev/iitpipe0";
+const DEVICE_FILE2 "/dev/iitpipe1";
+
+void create_devFiles(int );
+void remove_devFiles(int );
+char *atoi(int );
 
 #endif
