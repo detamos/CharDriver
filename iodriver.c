@@ -17,13 +17,13 @@ struct file_operations fops =
 
 static int __init load_module(void)
 {
-	printk(KERN_ALERT "Loading the module : iodriver\n");
 	major = register_chrdev(0, DEVICE_NAME, &fops);
 	if(major < 0)
 	{
 		printk(KERN_ALERT "Can't Register Device %s \n",DEVICE_NAME);
 		return -EFAULT;
 	}
+	printk(KERN_ALERT "Loading the module : iodriver\n");
 	printk(KERN_ALERT "Module registered with %d device id",major);
 
 	return 0;
