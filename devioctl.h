@@ -7,7 +7,4 @@ static int major;
 
 #define DEVICE_NAME "iodriver"
 
-void create_devFiles(int );
-void remove_devFiles(int );
-
 #endif
