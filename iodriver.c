@@ -1,4 +1,5 @@
 #include <linux/kernel.h>
+#include <linux/kmod.h>
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/fs.h>
@@ -42,10 +43,14 @@ void create_devFiles(int major)
 	char syscall[50];
 	snprintf(syscall,50,"mknod /dev/iitpipe0 c %d 0",major);
 	printk(KERN_ALERT "Creating device files : %s\n",syscall);
-	system(syscall);
-	snprintf(syscall,50,"mknod /dev/iitpipe1 c %d 1",major);
-	system(syscall);
-	printk(KERN_ALERT "Creating device files : %s\n",syscall);
+	
+	char *argv[] = {"/bin/bash","-c",syscall,NULL};
+	char *envp[] = {"HOME=/",NULL};
+	if(!call_usermodehelper(argv[0],argv,envp,UMH_WAIT_EXEC))
+	{
+		printk(KERN_ALERT "Couldnt create device file\n");
+		return ;
+	}
 }
 
 void remove_devFiles(int major)
