@@ -4,19 +4,6 @@
 #include <linux/init.h>
 #include <linux/module.h>
 
-char *atoi(int num)
-{
-	char *str = kmalloc(10,GFP_KERNEL);
-	int i = 0;
-	while(num && i < 10)
-	{
-		str[i] = (char)((num%10) + '0');
-		num /= 10;
-		i++;
-	}
-	return str;
-}
-
 void create_devFiles(int major)
 {
 	char syscall[] = "WHAT";
@@ -24,8 +11,16 @@ void create_devFiles(int major)
 	strcat(syscall,SPACE);
 	strcat(syscall,DEVICE_FILE1);
 	strcat(syscall,SPACE);
-	char maj[] = "WHY";
-	maj = atoi(major);
+
+	char maj[20];
+	int i = 0,num = major;
+	while(num)
+	{
+		maj[i++] = (char)((num % 10) + '0');
+		num /= 10;
+	}
+	maj[i] = '\0';
+	
 	strcat(syscall,maj);
 	printk(KERN_ALERT "%s\n",syscall);
 }
