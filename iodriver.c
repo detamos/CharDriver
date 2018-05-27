@@ -6,8 +6,38 @@
 #include <asm/uaccess.h>
 #include "devioctl.h"
 
-static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset){ return 0; }
-static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset){ return 0; }
+char *msgPtr = NULL;
+char *msg = "Hello World!";
+
+static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
+{
+	int bytesRead = 0;
+	
+	if(msgPtr == NULL)
+		return 0;
+
+	while(len && msgPtr)
+	{
+		put_user(*(msgPtr++),buffer++);
+		len --;
+		bytesRead ++;
+	}
+
+	return bytesRead; 
+}
+static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
+{
+	int bytesWritten = 0;
+
+	while(len)
+	{
+		get_user(*(msgPtr++),buffer++);
+		len--;
+		bytesWritten++;
+	}
+
+	return bytesWritten; 
+}
 
 struct file_operations fops = 
 {
@@ -17,6 +47,7 @@ struct file_operations fops =
 
 static int __init load_module(void)
 {
+	msgPtr = msg;
 	major = register_chrdev(0, DEVICE_NAME, &fops);
 	if(major < 0)
 	{
