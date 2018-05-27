@@ -40,9 +40,11 @@ static void __exit remove_module(void)
 void create_devFiles(int major)
 {
 	char syscall[50];
-	snprintf(syscall,50,"mknod /dev/iitpipe0 c %d 0\n",major);
+	snprintf(syscall,50,"mknod /dev/iitpipe0 c %d 0",major);
 	printk(KERN_ALERT "Creating device files : %s\n",syscall);
-	snprintf(syscall,50,"mknod /dev/iitpipe1 c %d 1\n",major);
+	system(syscall);
+	snprintf(syscall,50,"mknod /dev/iitpipe1 c %d 1",major);
+	system(syscall);
 	printk(KERN_ALERT "Creating device files : %s\n",syscall);
 }
 
