@@ -43,7 +43,15 @@ void create_devFiles(int major)
 	char sys1[] = "mknod /dev/iitpipe1 ";
 	printk(KERN_ALERT "Creating device files : %s\n",sys0);
 	printk(KERN_ALERT "Creating device files : %s\n",sys1);
-	
+
+}
+
+void remove_devFiles(int major)
+{
+	char sys0[] = "rm /dev/iitpipe0";
+	char sys1[] = "rm /dev/iitpipe1";
+	printk(KERN_ALERT "Removing device files : %s\n",sys0);
+	printk(KERN_ALERT "Removing device files : %s\n",sys1);
 }
 
 module_init(load_module);
