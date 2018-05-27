@@ -12,10 +12,14 @@ char *msg = "Hello World!";
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
 	int bytesRead = 0;
+	static int fixed = 0;
 	int length = strlen(msg);
 
-	if(msgPtr == NULL)
+	if(fixed == 1)
+	{
+		fixed = 0;
 		return 0;
+	}
 
 	while(length && buffer != NULL)
 	{
@@ -26,6 +30,8 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 		length --;
 		bytesRead ++;
 	}
+
+	fixed = 1;
 
 	return bytesRead; 
 }
