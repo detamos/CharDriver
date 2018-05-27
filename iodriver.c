@@ -23,8 +23,7 @@ static int __init load_module(void)
 		printk(KERN_ALERT "Can't Register Device %s \n",DEVICE_NAME);
 		return -EFAULT;
 	}
-	printk(KERN_ALERT "Loading the module : iodriver\n");
-	printk(KERN_ALERT "Module registered with %d device id",major);
+	printk(KERN_ALERT "Loading the module : iodriver with device id:%d\n",major);
 
 	return 0;
 }
