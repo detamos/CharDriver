@@ -45,9 +45,11 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 }
 static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
+	printk(KERN_INFO "i am in\n");
 	int bytesWritten = 0;
 	int length = strlen(buffer);
 	msgPtr = msg;
+	printk(KERN_INFO "goind inside while\n");
 	while(len && length)
 	{
 		get_user(*(msgPtr++),buffer++);
@@ -55,7 +57,7 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 		bytesWritten++;
 		length--;
 	}
-
+	printk(KERN_INFO "Life is good\n");
 	return bytesWritten; 
 }
 
