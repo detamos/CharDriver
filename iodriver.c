@@ -28,20 +28,30 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	}
 
 	int file_desc;
+	int length = len;
+	char inputBuf[len],buf[1];
 	mm_segment_t old_fs = get_fs();
+
 	set_fs(KERNEL_DS);
 	file_desc = sys_open("input",O_RDONLY,0);
 	if(file_desc < 0)
 	{
-		prinkt(KERN_INFO "Couldn't open input file\n");
+		printk(KERN_INFO "Couldn't open input file\n");
 		return -1;
 	}
 
-	int length = len;
-	char buf[1];
-	while(length && sys_read(file_desc,buf,1) == 1)
+	while(sys_read(fd,buf,1) == 1)
 	{
-		if(put_user(*(buf),buffer++))
+		inputBuf[i++] = buf[0];
+	}
+
+	sys_close(file_desc);
+	set_fs(old_fs);
+
+	
+	while(length)
+	{
+		if(put_user(*(inputBuf++),buffer++))
 		{
 			return -EFAULT;
 		}
