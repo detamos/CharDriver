@@ -6,6 +6,8 @@
 #include <asm/uaccess.h>
 #include "devioctl.h"
 #include <linux/delay.h>
+#include <linux/modversions.h>
+#include <linux/fs.h>
 
 
 static int Device_open = 0;
@@ -62,7 +64,7 @@ static int device_open(struct inode *inode, struct file *file)
 
 	MOD_INC_USE_COUNT;
 
-	return success;	
+	return 0;	
 }
 
 static int device_release(struct inode *inode,struct file *file)
@@ -75,23 +77,13 @@ static int device_release(struct inode *inode,struct file *file)
 
 int device_ioctl(struct inode *inode,struct file *file,unsigned int ioctl_num,unsigned long ioctl_param)
 {
-	switch(ioctl_num)
-	{
-		case IOCTL_SET_DELAY:
-			Delay = (int *)(ioctl_param);
-		default:
-			Delay = 0;
-	}
+	Delay = (int)(ioctl_param);
 	return 0;
 }
 
 struct file_operations fops = 
 {
-	.read = device_read,
-	.write = device_write,
-	.open = device_open,
-	.release = device_release,
-	.ioctl = device_ioctl
+	NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
 };
 
 static int __init load_module(void)
