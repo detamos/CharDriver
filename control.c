@@ -56,7 +56,7 @@ int main()
 
 		int numBytes = read(file_desc,buffer,len);
 		printf("Data Read : %s\n",buffer);
-
+		printf("%d read\n",numBytes);
 		close(file_desc);
 	}
 	else
@@ -70,7 +70,7 @@ int main()
 
 		scanf("%s\n",buffer);
 		int numBytes = write(file_desc,buffer,len);
-
+		printf("%d written\n",numBytes);
 		close(file_desc);
 	}
 
