@@ -2,39 +2,114 @@ make -C /lib/modules/4.15.0-22-generic/build M=/home/detamos/iodriver modules
 make[1]: Entering directory '/usr/src/linux-headers-4.15.0-22-generic'
   CC [M]  /home/detamos/iodriver/iodriver.o
 /home/detamos/iodriver/iodriver.c: In function ‘device_open’:
-/home/detamos/iodriver/iodriver.c:63:2: error: ‘MOD_INC_USE_COUNT’ undeclared (first use in this function); did you mean ‘QC_INO_COUNT’?
+/home/detamos/iodriver/iodriver.c:64:2: error: ‘MOD_INC_USE_COUNT’ undeclared (first use in this function); did you mean ‘QC_INO_COUNT’?
   MOD_INC_USE_COUNT;
   ^~~~~~~~~~~~~~~~~
   QC_INO_COUNT
-/home/detamos/iodriver/iodriver.c:63:2: note: each undeclared identifier is reported only once for each function it appears in
-/home/detamos/iodriver/iodriver.c:65:9: error: ‘success’ undeclared (first use in this function)
-  return success;
-         ^~~~~~~
+/home/detamos/iodriver/iodriver.c:64:2: note: each undeclared identifier is reported only once for each function it appears in
 /home/detamos/iodriver/iodriver.c: In function ‘device_release’:
-/home/detamos/iodriver/iodriver.c:72:2: error: ‘MOD_DEC_USE_COUNT’ undeclared (first use in this function)
+/home/detamos/iodriver/iodriver.c:73:2: error: ‘MOD_DEC_USE_COUNT’ undeclared (first use in this function)
   MOD_DEC_USE_COUNT;
   ^~~~~~~~~~~~~~~~~
-/home/detamos/iodriver/iodriver.c: In function ‘device_ioctl’:
-/home/detamos/iodriver/iodriver.c:80:3: error: case label does not reduce to an integer constant
-   case IOCTL_SET_DELAY:
-   ^~~~
-/home/detamos/iodriver/iodriver.c:81:10: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
-    Delay = (int *)(ioctl_param);
-          ^
+In file included from ./include/linux/kernel.h:8:0,
+                 from /home/detamos/iodriver/iodriver.c:1:
 /home/detamos/iodriver/iodriver.c: At top level:
-/home/detamos/iodriver/iodriver.c:94:3: error: ‘struct file_operations’ has no member named ‘ioctl’
-  .ioctl = device_ioctl
-   ^~~~~
-/home/detamos/iodriver/iodriver.c:94:11: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
-  .ioctl = device_ioctl
-           ^~~~~~~~~~~~
-/home/detamos/iodriver/iodriver.c:94:11: note: (near initialization for ‘fops’)
-/home/detamos/iodriver/iodriver.c:94:11: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
-/home/detamos/iodriver/iodriver.c:94:11: note: (near initialization for ‘fops.fsync’)
-/home/detamos/iodriver/iodriver.c: In function ‘device_open’:
-/home/detamos/iodriver/iodriver.c:66:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
+./include/linux/stddef.h:8:14: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:2: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+  ^~~~
+./include/linux/stddef.h:8:14: note: (near initialization for ‘fops’)
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:2: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+  ^~~~
+/home/detamos/iodriver/iodriver.c:85:7: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+       ^~~~~~~~~~~
+/home/detamos/iodriver/iodriver.c:85:7: note: (near initialization for ‘fops’)
+/home/detamos/iodriver/iodriver.c:85:7: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
+/home/detamos/iodriver/iodriver.c:85:7: note: (near initialization for ‘fops.llseek’)
+/home/detamos/iodriver/iodriver.c:85:19: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                   ^~~~~~~~~~~~
+/home/detamos/iodriver/iodriver.c:85:19: note: (near initialization for ‘fops’)
+/home/detamos/iodriver/iodriver.c:85:19: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
+/home/detamos/iodriver/iodriver.c:85:19: note: (near initialization for ‘fops.read’)
+In file included from ./include/linux/kernel.h:8:0,
+                 from /home/detamos/iodriver/iodriver.c:1:
+./include/linux/stddef.h:8:14: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:32: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                ^~~~
+./include/linux/stddef.h:8:14: note: (near initialization for ‘fops’)
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:32: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                ^~~~
+./include/linux/stddef.h:8:14: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:37: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                     ^~~~
+./include/linux/stddef.h:8:14: note: (near initialization for ‘fops’)
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:37: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                     ^~~~
+/home/detamos/iodriver/iodriver.c:85:42: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                          ^~~~~~~~~~~~
+/home/detamos/iodriver/iodriver.c:85:42: note: (near initialization for ‘fops’)
+/home/detamos/iodriver/iodriver.c:85:42: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
+/home/detamos/iodriver/iodriver.c:85:42: note: (near initialization for ‘fops.write_iter’)
+In file included from ./include/linux/kernel.h:8:0,
+                 from /home/detamos/iodriver/iodriver.c:1:
+./include/linux/stddef.h:8:14: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:55: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                                       ^~~~
+./include/linux/stddef.h:8:14: note: (near initialization for ‘fops’)
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:55: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                                       ^~~~
+/home/detamos/iodriver/iodriver.c:85:60: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                                            ^~~~~~~~~~~
+/home/detamos/iodriver/iodriver.c:85:60: note: (near initialization for ‘fops’)
+/home/detamos/iodriver/iodriver.c:85:60: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
+/home/detamos/iodriver/iodriver.c:85:60: note: (near initialization for ‘fops.iterate_shared’)
+In file included from ./include/linux/kernel.h:8:0,
+                 from /home/detamos/iodriver/iodriver.c:1:
+./include/linux/stddef.h:8:14: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:72: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                                                        ^~~~
+./include/linux/stddef.h:8:14: note: (near initialization for ‘fops’)
+ #define NULL ((void *)0)
+              ^
+/home/detamos/iodriver/iodriver.c:85:72: note: in expansion of macro ‘NULL’
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                                                        ^~~~
+/home/detamos/iodriver/iodriver.c:85:77: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+  NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+                                                                             ^~~~~~~~~~~~~~
+/home/detamos/iodriver/iodriver.c:85:77: note: (near initialization for ‘fops’)
+/home/detamos/iodriver/iodriver.c:85:77: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
+/home/detamos/iodriver/iodriver.c:85:77: note: (near initialization for ‘fops.unlocked_ioctl’)
 cc1: some warnings being treated as errors
 scripts/Makefile.build:339: recipe for target '/home/detamos/iodriver/iodriver.o' failed
 make[2]: *** [/home/detamos/iodriver/iodriver.o] Error 1

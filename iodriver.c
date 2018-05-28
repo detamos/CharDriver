@@ -6,7 +6,6 @@
 #include <asm/uaccess.h>
 #include "devioctl.h"
 #include <linux/delay.h>
-#include <linux/modversions.h>
 #include <linux/fs.h>
 
 
