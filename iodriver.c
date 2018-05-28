@@ -33,7 +33,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	int length = len,i = 0;
 	char inputBuf[len];
 
-	int cur_fs = get_fs();
+	mm_segment_t cur_fs = get_fs();
 
 	set_fs(get_ds());
 	int file_desc = sys_open("input",O_RONLY,0);
@@ -50,7 +50,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	{
 		inputBuf[i++] = buf[0];
 	}
-	set_fs(cur_fs);
+	set_fs(cur_fs);	
 
 	i = 0;
 	while(length && i < len)
