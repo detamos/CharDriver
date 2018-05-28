@@ -50,7 +50,7 @@ int main()
 		file_desc = open("iitpipe0",0);
 		if(file_desc < 0)
 		{
-			printf("Can't open device file /dev/iitpipe0\n");
+			printf("Can't open device file iitpipe0\n");
 			exit(-1);
 		}
 
@@ -64,11 +64,11 @@ int main()
 		file_desc = open("iitpipe1",0);
 		if(file_desc < 0)
 		{
-			printf("Can't open device file /dev/iitpipe1\n");
+			printf("Can't open device file iitpipe1\n");
 			exit(-1);
 		}
 
-		scanf("%s\n",buffer);
+		strcpy(buffer,"Please Help!");
 		int numBytes = write(file_desc,buffer,len);
 		printf("%d written\n",numBytes);
 		close(file_desc);

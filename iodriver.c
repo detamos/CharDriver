@@ -64,7 +64,7 @@ static int device_open(struct inode *inode, struct file *file)
 	Device_open++;
 	msgPtr = msg;
 
-	try_module_get(THIS_MODULE);
+//	try_module_get(THIS_MODULE);
 
 	return 0;	
 }
@@ -73,7 +73,7 @@ static int device_release(struct inode *inode,struct file *file)
 {
 	printk(KERN_INFO "device_release(%p,%p)",inode,file);
 	Device_open --;
-	module_put(THIS_MODULE);
+//	module_put(THIS_MODULE);
 	return 0;
 }
 
