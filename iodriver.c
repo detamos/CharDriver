@@ -7,6 +7,7 @@
 #include "devioctl.h"
 #include <linux/delay.h>
 #include <linux/fs.h>
+#include <linux/syscalls.h>
 
 
 static int Device_open = 0;
@@ -17,10 +18,8 @@ static char msg[100] = "Hello World!";
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
-	printk(KERN_INFO "Is this read called\n");
 	int bytesRead = 0;
 	static int fixed = 0;
-	int length = strlen(msg);
 
 	if(fixed == 1)
 	{
@@ -28,11 +27,21 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 		return 0;
 	}
 
-	msgPtr = msg;
-
-	while(length && buffer != NULL)
+	int file_desc;
+	mm_segment_t old_fs = get_fs();
+	set_fs(KERNEL_DS);
+	file_desc = sys_open("input",O_RDONLY,0);
+	if(file_desc < 0)
 	{
-		if(put_user(*(msgPtr++),buffer++))
+		prinkt(KERN_INFO "Couldn't open input file\n");
+		return -1;
+	}
+
+	int length = len;
+	char buf[1];
+	while(length && sys_read(file_desc,buf,1) == 1)
+	{
+		if(put_user(*(buf),buffer++))
 		{
 			return -EFAULT;
 		}
@@ -46,20 +55,19 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 }
 static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
-	printk(KERN_INFO "i am in\n");
 	int bytesWritten = 0;
 	int length = strlen(buffer);
 	msgPtr = msg;
-	printk(KERN_INFO "goind inside while\n");
+	char *ptrBuf = buffer;
 	while(len && length)
 	{
-		get_user(*(msgPtr++),buffer++);
+		get_user(*(msgPtr),ptrBuf++);
 		len--;
 		bytesWritten++;
 		length--;
 	}
 	*msgPtr = '\0';
-	printk(KERN_INFO "Life is good\n");
+
 	return bytesWritten; 
 }
 

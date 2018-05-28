@@ -54,8 +54,7 @@ int main()
 		}
 
 		int numBytes = read(file_desc,buffer,len);
-		printf("Data Read : %s\n",buffer);
-		printf("%d read\n",numBytes);
+
 		close(file_desc);
 	}
 	else
@@ -67,9 +66,7 @@ int main()
 			exit(-1);
 		}
 
-		strcpy(buffer,"Please Help!");
 		int numBytes = write(file_desc,buffer,len);
-		printf("%d written\n",numBytes);
 		close(file_desc);
 	}
 
