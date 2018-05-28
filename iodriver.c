@@ -5,6 +5,11 @@
 #include <linux/fs.h>
 #include <asm/uaccess.h>
 #include "devioctl.h"
+#include <linux/delay.h>
+
+
+static int Device_open = 0;
+static int Delay = 0;
 
 char *msgPtr = NULL;
 char *msg = "Hello World!";
@@ -38,7 +43,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
 	int bytesWritten = 0;
-
+	msleep(Delay);
 	while(len)
 	{
 		get_user(*(msgPtr++),buffer++);
@@ -49,10 +54,44 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 	return bytesWritten; 
 }
 
+static int device_open(struct inode *inode, struct file *file)
+{
+	printk(KERN_ALERT "device open(%p)\n",file);
+	Device_open++;
+	msgPtr = msg;
+
+	MOD_INC_USE_COUNT;
+
+	return success;	
+}
+
+static int device_release(struct inode *inode,struct file *file)
+{
+	printk(KERN_ALERT "device_release(%p,%p)",inode,file);
+	Device_open --;
+	MOD_DEC_USE_COUNT;
+	return 0;
+}
+
+int device_ioctl(struct inode *inode,struct file *file,unsigned int ioctl_num,unsigned long ioctl_param)
+{
+	switch(ioctl_num)
+	{
+		case IOCTL_SET_DELAY:
+			Delay = (int *)(ioctl_param);
+		default:
+			Delay = 0;
+	}
+	return 0;
+}
+
 struct file_operations fops = 
 {
 	.read = device_read,
-	.write = device_write
+	.write = device_write,
+	.open = device_open,
+	.release = device_release,
+	.ioctl = device_ioctl
 };
 
 static int __init load_module(void)

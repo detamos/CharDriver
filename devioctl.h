@@ -6,5 +6,6 @@
 static int major;
 
 #define DEVICE_NAME "iodriver"
+#define IOCTL_SET_DELAY _IOR(major,0,int)
 
 #endif
