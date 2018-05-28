@@ -61,7 +61,7 @@ static int device_open(struct inode *inode, struct file *file)
 	Device_open++;
 	msgPtr = msg;
 
-	MOD_INC_USE_COUNT;
+	try_get_module(THIS_MODULE);
 
 	return 0;	
 }
@@ -70,7 +70,7 @@ static int device_release(struct inode *inode,struct file *file)
 {
 	printk(KERN_ALERT "device_release(%p,%p)",inode,file);
 	Device_open --;
-	MOD_DEC_USE_COUNT;
+	module_put(THIS_MODULE);
 	return 0;
 }
 
@@ -82,7 +82,11 @@ int device_ioctl(struct inode *inode,struct file *file,unsigned int ioctl_num,un
 
 struct file_operations fops = 
 {
-	NULL,device_read,device_write,NULL,NULL,device_ioctl,NULL,device_open,NULL,device_release
+	.read = device_read,
+	.write = device_write,
+	.ioctl = device_ioctl,
+	.open = device_open,
+	.release = device_release,
 };
 
 static int __init load_module(void)
