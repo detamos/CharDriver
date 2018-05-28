@@ -74,7 +74,7 @@ static int device_release(struct inode *inode,struct file *file)
 	return 0;
 }
 
-int device_ioctl(struct inode *inode,struct file *file,unsigned int ioctl_num,unsigned long ioctl_param)
+static long device_ioctl(struct inode *inode,struct file *file,unsigned int ioctl_num,unsigned long ioctl_param)
 {
 	Delay = (int)(ioctl_param);
 	return 0;
@@ -84,7 +84,7 @@ struct file_operations fops =
 {
 	.read = device_read,
 	.write = device_write,
-	.ioctl = device_ioctl,
+	.unlocked_ioctl = device_ioctl,
 	.open = device_open,
 	.release = device_release,
 };
