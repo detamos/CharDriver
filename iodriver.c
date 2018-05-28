@@ -61,7 +61,7 @@ static int device_open(struct inode *inode, struct file *file)
 	Device_open++;
 	msgPtr = msg;
 
-	try_get_module(THIS_MODULE);
+	try_module_get(THIS_MODULE);
 
 	return 0;	
 }
@@ -74,7 +74,7 @@ static int device_release(struct inode *inode,struct file *file)
 	return 0;
 }
 
-static long device_ioctl(struct inode *inode,struct file *file,unsigned int ioctl_num,unsigned long ioctl_param)
+static long device_ioctl(struct file *file,unsigned int ioctl_num,unsigned long ioctl_param)
 {
 	Delay = (int)(ioctl_param);
 	return 0;
