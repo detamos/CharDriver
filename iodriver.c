@@ -16,7 +16,8 @@ static int Delay = 0;
 static char *msgPtr = NULL;
 static char msg[100] = "Hello World!";
 
-extern long sys_read(unsigned int fd,char *buf,size_t count);
+extern size_t sys_read(int ,char *,size_t );
+extern size_t sys_write(int, const void*, size_t);
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
@@ -32,19 +33,24 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	int length = len,i = 0;
 	char inputBuf[len];
 
-	struct file *file_desc = NULL;
-	file_desc = filp_open("input",O_RDONLY,0);
-	if(file_desc == NULL)
+	int cur_fs = get_fs();
+
+	set_fs(get_ds());
+	int file_desc = sys_open("input",O_RONLY,0);
+	set_fs(cur_fs);
+
+	if(file_desc < 0)
 	{
-		printk(KERN_INFO "Couldn't open input file\n");
+		printk(KERN_INFO "Couldnt open the input file\n");
 		return -1;
 	}
 
-	mm_segment_t fs = get_fs();
 	set_fs(get_ds());
-//	file_desc -> f_op -> read(file_desc,inputBuf,len,&file_desc->f_pos);
-	set_fs(fs);
-	filp_close(file_desc,NULL);
+	while(sys_read(file_desc,buf,1) == 1)
+	{
+		inputBuf[i++] = buf[0];
+	}
+	set_fs(cur_fs);
 
 	i = 0;
 	while(length && i < len)
