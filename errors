@@ -1,0 +1,45 @@
+make -C /lib/modules/4.15.0-22-generic/build M=/home/detamos/iodriver modules
+make[1]: Entering directory '/usr/src/linux-headers-4.15.0-22-generic'
+  CC [M]  /home/detamos/iodriver/iodriver.o
+/home/detamos/iodriver/iodriver.c: In function ‘device_open’:
+/home/detamos/iodriver/iodriver.c:63:2: error: ‘MOD_INC_USE_COUNT’ undeclared (first use in this function); did you mean ‘QC_INO_COUNT’?
+  MOD_INC_USE_COUNT;
+  ^~~~~~~~~~~~~~~~~
+  QC_INO_COUNT
+/home/detamos/iodriver/iodriver.c:63:2: note: each undeclared identifier is reported only once for each function it appears in
+/home/detamos/iodriver/iodriver.c:65:9: error: ‘success’ undeclared (first use in this function)
+  return success;
+         ^~~~~~~
+/home/detamos/iodriver/iodriver.c: In function ‘device_release’:
+/home/detamos/iodriver/iodriver.c:72:2: error: ‘MOD_DEC_USE_COUNT’ undeclared (first use in this function)
+  MOD_DEC_USE_COUNT;
+  ^~~~~~~~~~~~~~~~~
+/home/detamos/iodriver/iodriver.c: In function ‘device_ioctl’:
+/home/detamos/iodriver/iodriver.c:80:3: error: case label does not reduce to an integer constant
+   case IOCTL_SET_DELAY:
+   ^~~~
+/home/detamos/iodriver/iodriver.c:81:10: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+    Delay = (int *)(ioctl_param);
+          ^
+/home/detamos/iodriver/iodriver.c: At top level:
+/home/detamos/iodriver/iodriver.c:94:3: error: ‘struct file_operations’ has no member named ‘ioctl’
+  .ioctl = device_ioctl
+   ^~~~~
+/home/detamos/iodriver/iodriver.c:94:11: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
+  .ioctl = device_ioctl
+           ^~~~~~~~~~~~
+/home/detamos/iodriver/iodriver.c:94:11: note: (near initialization for ‘fops’)
+/home/detamos/iodriver/iodriver.c:94:11: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
+/home/detamos/iodriver/iodriver.c:94:11: note: (near initialization for ‘fops.fsync’)
+/home/detamos/iodriver/iodriver.c: In function ‘device_open’:
+/home/detamos/iodriver/iodriver.c:66:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+cc1: some warnings being treated as errors
+scripts/Makefile.build:339: recipe for target '/home/detamos/iodriver/iodriver.o' failed
+make[2]: *** [/home/detamos/iodriver/iodriver.o] Error 1
+Makefile:1552: recipe for target '_module_/home/detamos/iodriver' failed
+make[1]: *** [_module_/home/detamos/iodriver] Error 2
+make[1]: Leaving directory '/usr/src/linux-headers-4.15.0-22-generic'
+Makefile:4: recipe for target 'all' failed
+make: *** [all] Error 2
