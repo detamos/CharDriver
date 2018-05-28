@@ -16,8 +16,8 @@ static int Delay = 0;
 static char *msgPtr = NULL;
 static char msg[100] = "Hello World!";
 
-extern size_t sys_read(int ,char *,size_t );
-extern size_t sys_write(int, const void*, size_t);
+extern size_t sys_read(unsigned int ,char *,size_t );
+extern size_t sys_write(unsigned int, const char*, size_t);
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
