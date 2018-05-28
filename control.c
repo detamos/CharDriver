@@ -47,7 +47,7 @@ int main()
 	int file_desc;
 	if(pid == 0)
 	{
-	/*	file_desc = open("iitpipe0",0);
+		file_desc = open("iitpipe0",0);
 		if(file_desc < 0)
 		{
 			printf("Can't open device file iitpipe0\n");
@@ -57,7 +57,7 @@ int main()
 		int numBytes = read(file_desc,buffer,len);
 		printf("Data Read : %s\n",buffer);
 		printf("%d read\n",numBytes);
-		close(file_desc);*/
+		close(file_desc);
 	}
 	else
 	{

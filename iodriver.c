@@ -17,6 +17,7 @@ static char msg[100] = "Hello World!";
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
+	printk(KERN_INFO "Is this read called\n");
 	int bytesRead = 0;
 	static int fixed = 0;
 	int length = strlen(msg);
