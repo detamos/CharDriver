@@ -59,7 +59,7 @@ int main()
 	}
 	else
 	{
-		int file_desc = open("iitpipe1",O_RDWR);
+/*		int file_desc = open("iitpipe1",O_RDWR);
 		if(file_desc < 0)
 		{
 			printf("Can't open device file iitpipe1\n");
@@ -67,7 +67,7 @@ int main()
 		}
 
 		int numBytes = write(file_desc,buffer,len);
-		close(file_desc);
+		close(file_desc);*/
 	}
 
 	return 0;
