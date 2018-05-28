@@ -1,22 +1,38 @@
 make -C /lib/modules/4.15.0-22-generic/build M=/home/detamos/iodriver modules
 make[1]: Entering directory '/usr/src/linux-headers-4.15.0-22-generic'
   CC [M]  /home/detamos/iodriver/iodriver.o
-/home/detamos/iodriver/iodriver.c: In function ‘device_open’:
-/home/detamos/iodriver/iodriver.c:64:2: error: implicit declaration of function ‘try_get_module’; did you mean ‘ref_module’? [-Werror=implicit-function-declaration]
-  try_get_module(THIS_MODULE);
-  ^~~~~~~~~~~~~~
-  ref_module
-/home/detamos/iodriver/iodriver.c: At top level:
-/home/detamos/iodriver/iodriver.c:87:3: error: ‘struct file_operations’ has no member named ‘ioctl’
-  .ioctl = device_ioctl,
-   ^~~~~
-/home/detamos/iodriver/iodriver.c:87:11: error: positional initialization of field in ‘struct’ declared with ‘designated_init’ attribute [-Werror=designated-init]
-  .ioctl = device_ioctl,
-           ^~~~~~~~~~~~
-/home/detamos/iodriver/iodriver.c:87:11: note: (near initialization for ‘fops’)
-/home/detamos/iodriver/iodriver.c:87:11: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
-/home/detamos/iodriver/iodriver.c:87:11: note: (near initialization for ‘fops.read_iter’)
-cc1: some warnings being treated as errors
+/home/detamos/iodriver/iodriver.c:19:15: error: conflicting types for ‘sys_read’
+ extern size_t sys_read(unsigned int ,char *,size_t );
+               ^~~~~~~~
+In file included from /home/detamos/iodriver/iodriver.c:10:0:
+./include/linux/syscalls.h:598:17: note: previous declaration of ‘sys_read’ was here
+ asmlinkage long sys_read(unsigned int fd, char __user *buf, size_t count);
+                 ^~~~~~~~
+/home/detamos/iodriver/iodriver.c:20:15: error: conflicting types for ‘sys_write’
+ extern size_t sys_write(unsigned int, const char*, size_t);
+               ^~~~~~~~~
+In file included from /home/detamos/iodriver/iodriver.c:10:0:
+./include/linux/syscalls.h:603:17: note: previous declaration of ‘sys_write’ was here
+ asmlinkage long sys_write(unsigned int fd, const char __user *buf,
+                 ^~~~~~~~~
+/home/detamos/iodriver/iodriver.c: In function ‘device_read’:
+/home/detamos/iodriver/iodriver.c:33:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  int length = len,i = 0;
+  ^~~
+/home/detamos/iodriver/iodriver.c:39:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  int file_desc = sys_open("input",O_RDWR,0);
+  ^~~
+/home/detamos/iodriver/iodriver.c:49:27: error: ‘buf’ undeclared (first use in this function)
+  while(sys_read(file_desc,buf,1) == 1)
+                           ^~~
+/home/detamos/iodriver/iodriver.c:49:27: note: each undeclared identifier is reported only once for each function it appears in
+/home/detamos/iodriver/iodriver.c: In function ‘device_write’:
+/home/detamos/iodriver/iodriver.c:75:17: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  char *ptrBuf = buffer;
+                 ^~~~~~
+/home/detamos/iodriver/iodriver.c:75:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  char *ptrBuf = buffer;
+  ^~~~
 scripts/Makefile.build:339: recipe for target '/home/detamos/iodriver/iodriver.o' failed
 make[2]: *** [/home/detamos/iodriver/iodriver.o] Error 1
 Makefile:1552: recipe for target '_module_/home/detamos/iodriver' failed
