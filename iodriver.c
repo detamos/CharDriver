@@ -12,8 +12,8 @@
 static int Device_open = 0;
 static int Delay = 0;
 
-char *msgPtr = NULL;
-char msg[100] = "Hello World!";
+static char *msgPtr = NULL;
+static char msg[100] = "Hello World!";
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
@@ -46,13 +46,14 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
 	int bytesWritten = 0;
-	len = strlen(buffer);
+	int length = strlen(buffer);
 	msgPtr = msg;
-	while(len)
+	while(len && length)
 	{
 		get_user(*(msgPtr++),buffer++);
 		len--;
 		bytesWritten++;
+		length--;
 	}
 
 	return bytesWritten; 
