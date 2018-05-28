@@ -46,33 +46,30 @@ int main()
 
 	if(pid == 0)
 	{
-		int file_desc = open("iitpipe0",0);
+		int file_desc = open("iitpipe0",O_RDWR);
 		if(file_desc < 0)
 		{
 			printf("Can't open device file iitpipe0\n");
 			exit(-1);
 		}
 
-		strcpy(buffer,"Please Help!");
-		printf("%s\n",buffer);
-		int numBytes = write(file_desc,buffer,len);
-		printf("%d written\n",numBytes);
-
+		int numBytes = read(file_desc,buffer,len);
+		printf("Data Read : %s\n",buffer);
+		printf("%d read\n",numBytes);
 		close(file_desc);
 	}
 	else
 	{
-		int file_desc = open("iitpipe1",0);
+		int file_desc = open("iitpipe1",O_RDWR);
 		if(file_desc < 0)
 		{
 			printf("Can't open device file iitpipe1\n");
 			exit(-1);
 		}
 
-		int numBytes = read(file_desc,buffer,len);
-		printf("Data Read : %s\n",buffer);
-		printf("%d read\n",numBytes);
-
+		strcpy(buffer,"Please Help!");
+		int numBytes = write(file_desc,buffer,len);
+		printf("%d written\n",numBytes);
 		close(file_desc);
 	}
 
