@@ -32,7 +32,8 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	int length = len,i = 0;
 	char inputBuf[len];
 
-	struct file *file_desc = filp_open("input",O_RDONLY,0);
+/*	struct file *file_desc = NULL;
+	file_desc = filp_open("input",O_RDONLY,0);
 	if(file_desc == NULL)
 	{
 		printk(KERN_INFO "Couldn't open input file\n");
@@ -44,7 +45,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	file_desc -> f_op -> read(file_desc,inputBuf,len,&file_desc->f_pos);
 	set_fs(fs);
 	filp_close(file_desc,NULL);
-
+*/
 	i = 0;
 	while(length && i < len)
 	{
