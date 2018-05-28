@@ -32,23 +32,19 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	int file_desc;
 	int length = len,i = 0;
 	char inputBuf[len],buf[1];
-	mm_segment_t old_fs = get_fs();
 
-	set_fs(KERNEL_DS);
-	file_desc = sys_open("input",O_RDONLY,0);
-	if(file_desc < 0)
+	struct file *file_desc = filp_open("input",O_RDONLY,0);
+	if(file_desc == NULL)
 	{
 		printk(KERN_INFO "Couldn't open input file\n");
 		return -1;
 	}
 
-	while(sys_read(file_desc,buf,1) == 1)
-	{
-		inputBuf[i++] = buf[0];
-	}
-
-	sys_close(file_desc);
-	set_fs(old_fs);
+	mm_segment_t fs = get_fs();
+	set_fs(get_ds());
+	file_desc -> f_op -> read(file_desc,inputBuf,len,&file_desc->f_pos);
+	set_fs(fs);
+	filp_close(file_desc,NULL);
 
 	i = 0;
 	while(length && i < len)
