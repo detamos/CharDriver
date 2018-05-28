@@ -29,9 +29,8 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 		return 0;
 	}
 
-	int file_desc;
 	int length = len,i = 0;
-	char inputBuf[len],buf[1];
+	char inputBuf[len];
 
 	struct file *file_desc = filp_open("input",O_RDONLY,0);
 	if(file_desc == NULL)
