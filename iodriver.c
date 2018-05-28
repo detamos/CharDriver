@@ -58,6 +58,7 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 		bytesWritten++;
 		length--;
 	}
+	*msgPtr = '\0';
 	printk(KERN_INFO "Life is good\n");
 	return bytesWritten; 
 }
