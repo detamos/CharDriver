@@ -76,7 +76,8 @@ static int device_release(struct inode *inode,struct file *file)
 
 static long device_ioctl(struct file *file,unsigned int ioctl_num,unsigned long ioctl_param)
 {
-	Delay = (int)(ioctl_param);
+	if(ioctl_num == IOCTL_SET_DELAY)
+		Delay = (int)(ioctl_param);
 	return 0;
 }
 
