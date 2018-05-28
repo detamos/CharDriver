@@ -59,7 +59,7 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 
 static int device_open(struct inode *inode, struct file *file)
 {
-	printk(KERN_ALERT "device open(%p)\n",file);
+	printk(KERN_INFO "device open(%p)\n",file);
 	Device_open++;
 	msgPtr = msg;
 
@@ -70,7 +70,7 @@ static int device_open(struct inode *inode, struct file *file)
 
 static int device_release(struct inode *inode,struct file *file)
 {
-	printk(KERN_ALERT "device_release(%p,%p)",inode,file);
+	printk(KERN_INFO "device_release(%p,%p)",inode,file);
 	Device_open --;
 	module_put(THIS_MODULE);
 	return 0;
@@ -98,10 +98,10 @@ static int __init load_module(void)
 	major = register_chrdev(0, DEVICE_NAME, &fops);
 	if(major < 0)
 	{
-		printk(KERN_ALERT "Can't Register Device %s \n",DEVICE_NAME);
+		printk(KERN_INFO "Can't Register Device %s \n",DEVICE_NAME);
 		return -EFAULT;
 	}
-	printk(KERN_ALERT "Loading the module : iodriver with device id:%d\n",major);
+	printk(KERN_INFO "Loading the module : iodriver with device id:%d\n",major);
 
 	return 0;
 }
@@ -109,8 +109,8 @@ static int __init load_module(void)
 static void __exit remove_module(void)
 {
 	unregister_chrdev(major,DEVICE_NAME);
-
-	printk(KERN_ALERT "Removing the module : iodriver\n");
+	printk(KERN_INFO "Finale String : %s\n",msg);
+	printk(KERN_INFO "Removing the module : iodriver\n");
 }
 
 module_init(load_module);

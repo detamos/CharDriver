@@ -67,6 +67,10 @@ int main()
 			printf("Can't open device file /dev/iitpipe1\n");
 			exit(-1);
 		}
+
+		scanf("%s\n",buffer);
+		int numBytes = write(file_desc,buffer,len);
+
 		close(file_desc);
 	}
 
