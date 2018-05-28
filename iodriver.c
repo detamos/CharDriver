@@ -36,7 +36,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	mm_segment_t cur_fs = get_fs();
 
 	set_fs(get_ds());
-	int file_desc = sys_open("input",O_RONLY,0);
+	int file_desc = sys_open("input",O_RDWR,0);
 	set_fs(cur_fs);
 
 	if(file_desc < 0)
