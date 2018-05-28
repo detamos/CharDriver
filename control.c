@@ -68,6 +68,7 @@ int main()
 		}
 
 		strcpy(buffer,"Please Help!");
+		printf("%s\n",buffer);
 		int numBytes = write(file_desc,buffer,len);
 		printf("%d written\n",numBytes);
 		close(file_desc);
