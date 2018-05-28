@@ -28,7 +28,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	}
 
 	int file_desc;
-	int length = len;
+	int length = len,i = 0;
 	char inputBuf[len],buf[1];
 	mm_segment_t old_fs = get_fs();
 
@@ -40,7 +40,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 		return -1;
 	}
 
-	while(sys_read(fd,buf,1) == 1)
+	while(sys_read(file_desc,buf,1) == 1)
 	{
 		inputBuf[i++] = buf[0];
 	}
@@ -48,10 +48,10 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	sys_close(file_desc);
 	set_fs(old_fs);
 
-	
-	while(length)
+	i = 0;
+	while(length && i < len)
 	{
-		if(put_user(*(inputBuf++),buffer++))
+		if(put_user(inputBuf[i++],buffer++))
 		{
 			return -EFAULT;
 		}
