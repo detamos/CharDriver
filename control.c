@@ -20,6 +20,7 @@ void ioctl_change_delay(int file_desc,int delay)
 
 char *buffer;
 int len,delay;
+FILE *inputFile,*outputFile;
 
 int main()
 {
@@ -52,6 +53,10 @@ int main()
 			printf("Can't open device file /dev/iitpipe0\n");
 			exit(-1);
 		}
+
+		int numBytes = read(file_desc,buffer,len,0);
+		printf("Data Read : %s\n",buffer);
+
 		close(file_desc);
 	}
 	else

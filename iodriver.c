@@ -21,6 +21,8 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 	static int fixed = 0;
 	int length = strlen(msg);
 
+	msleep(Delay);
+
 	if(fixed == 1)
 	{
 		fixed = 0;
@@ -44,7 +46,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
 	int bytesWritten = 0;
-	msleep(Delay);
+	
 	while(len)
 	{
 		get_user(*(msgPtr++),buffer++);
