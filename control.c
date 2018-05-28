@@ -47,7 +47,7 @@ int main()
 	int file_desc;
 	if(pid == 0)
 	{
-		file_desc = open("/dev/iitpipe0",0);
+		file_desc = open("iitpipe0",0);
 		if(file_desc < 0)
 		{
 			printf("Can't open device file /dev/iitpipe0\n");
@@ -61,7 +61,7 @@ int main()
 	}
 	else
 	{
-		file_desc = open("/dev/iitpipe1",0);
+		file_desc = open("iitpipe1",0);
 		if(file_desc < 0)
 		{
 			printf("Can't open device file /dev/iitpipe1\n");
