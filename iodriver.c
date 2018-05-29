@@ -47,7 +47,6 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 	int bytesWritten = 0;
 	int length = strlen(buffer);
 
-	char *ptrBuf = buffer;
 	while(total && length)
 	{
 		char temp = msg[front++];
@@ -55,8 +54,8 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 			front = 0;
 		total--;
 
-		get_user(temp,ptrBuf++);
-		
+		get_user(temp,buffer++);
+
 		bytesWritten++;
 		length--;
 	}
