@@ -113,6 +113,7 @@ start_A :
 			goto start_A;
 		fclose(inFile);
 		close(file_desc);
+		noneed = wait(&status);
 	}
 	else
 	{
