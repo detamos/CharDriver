@@ -115,13 +115,11 @@ start_A :
 		}
 		if(flag == 0)
 			goto start_A;
-		noneed = wait(&status);
 		fclose(inFile);
 		close(file_desc);
 	}
 	else
 	{
-		delay(1);
 		int file_desc = open("/dev/iitpipe1",O_RDWR);
 		if(file_desc < 0)
 		{
