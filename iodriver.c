@@ -11,10 +11,14 @@
 
 static int Device_open = 0;
 static int Delay = 0;
-char msg[MAX];
-int front = 0;
-int rear = -1;
-int total = 0;
+char msg1[MAX];
+char msg2[MAX];
+int front2 = 0;
+int rear2 = -1;
+int total2 = 0;
+int front1 = 0;
+int rear1 = -1;
+int total1 = 0;
 char tempData;
 
 ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
@@ -27,7 +31,15 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 		fixed = 0;
 		return 0;
 	}
-
+	int total;
+	if(iminor(filp->f_path.dentry->d_inode) == 0)
+	{
+		total = total1;
+	}
+	else
+	{
+		total = total2;
+	}
 	size_t length = len;
 	while(length && total)
 	{
@@ -35,11 +47,22 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 		{
 			return -EFAULT;
 		}
-		
-		tempData = msg[front++];
-		if(front == MAX)
-			front = 0;
-		total--;
+		if(iminor(filp->f_path.dentry->d_inode) == 0)
+		{
+			tempData = msg1[front1++];
+			if(front1 == MAX)
+				front1 = 0;
+			total1--;
+			total--;	
+		}
+		else
+		{
+			tempData = msg2[front2++];
+			if(front2 == MAX)
+				front2 = 0;
+			total2--;
+			total--;
+		}
 		
 		length --;
 		bytesRead ++;
@@ -54,13 +77,33 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 	int bytesWritten = 0;
 	int length = strlen(buffer);
 
+	int total;
+	if(iminor(filp->f_path.dentry->d_inode) == 0)
+	{
+		total = total1;
+	}
+	else
+	{
+		total = total2;
+	}
 	while(total != MAX && length)
 	{
-		if(rear == MAX-1)
-			rear = -1;
-		msg[++rear] = tempData;
-		total++;
-
+		if(iminor(filp->f_path.dentry->d_inode) == 0)
+		{
+			if(rear1 == MAX-1)
+				rear1 = -1;
+			msg1[++rear1] = tempData;
+			total1++;
+			total++;
+		}	
+		else
+		{
+			if(rear2 == MAX-1)
+				rear2 = -1;
+			msg2[++rear2] = tempData;
+			total2++;
+			total++;
+		}
 		if(get_user(tempData,buffer++))
 		{
 			return -EFAULT;
