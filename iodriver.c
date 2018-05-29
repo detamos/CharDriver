@@ -113,7 +113,7 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 		bytesWritten++;
 		length--;
 	}
-	printk(KERN_INFO "Minor Number %d read %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesRead);
+	printk(KERN_INFO "Minor Number %d read %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesWritten);
 	return bytesWritten; 
 }
 
