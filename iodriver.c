@@ -79,7 +79,7 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 	int length = strlen(buffer);
 	printk(KERN_INFO "Minor Number Writing : %d\n",iminor(filp->f_path.dentry->d_inode));
 	int total;
-	if(iminor(file->f_path.dentry->d_inode) == 0)
+	if(iminor(filp->f_path.dentry->d_inode) == 0)
 	{
 		total = total1;
 	}
@@ -128,22 +128,6 @@ static int device_open(struct inode *inode, struct file *file)
 
 static int device_release(struct inode *inode,struct file *file)
 {
-	int i;
-	printk(KERN_INFO "Final Data Left : \n");
-	if(iminor(filp->f_path.dentry->d_inode) == 0)
-	{
-		for(i=front1;i<=rear1;i++)
-		{
-			printk(KERN_INFO "%c",msg1[i]);
-		}
-	}
-	else
-	{
-		for(i=front2;i<=rear2;i++)
-		{
-			printk(KERN_INFO "%c",msg2[i]);
-		}
-	}
 	printk(KERN_INFO "device_release(%p,%p)",inode,file);
 	Device_open --;
 //	module_put(THIS_MODULE);
