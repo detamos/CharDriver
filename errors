@@ -1,83 +1,63 @@
-control.c:24:5: error: redefinition of ‘front’
- int front = 0,rear = -1,total = 0;
-     ^~~~~
-In file included from control.c:4:0:
-devlib.h:15:12: note: previous definition of ‘front’ was here
- static int front = 0;
-            ^~~~~
-control.c:24:15: error: redefinition of ‘rear’
- int front = 0,rear = -1,total = 0;
-               ^~~~
-In file included from control.c:4:0:
-devlib.h:16:12: note: previous definition of ‘rear’ was here
- static int rear = -1;
-            ^~~~
-control.c:24:25: error: redefinition of ‘total’
- int front = 0,rear = -1,total = 0;
-                         ^~~~~
-In file included from control.c:4:0:
-devlib.h:17:12: note: previous definition of ‘total’ was here
- static int total = 0;
-            ^~~~~
+In file included from /usr/include/x86_64-linux-gnu/asm/ioctl.h:1:0,
+                 from /usr/include/linux/ioctl.h:5,
+                 from /usr/include/asm-generic/ioctls.h:5,
+                 from /usr/include/x86_64-linux-gnu/asm/ioctls.h:1,
+                 from /usr/include/x86_64-linux-gnu/bits/ioctls.h:23,
+                 from /usr/include/x86_64-linux-gnu/sys/ioctl.h:26,
+                 from control.c:3:
+control.c: In function ‘ioctl_change_delay’:
+devlib.h:9:30: error: ‘major’ undeclared (first use in this function)
+ #define IOCTL_SET_DELAY _IOR(major,0,int)
+                              ^
+control.c:15:24: note: in expansion of macro ‘IOCTL_SET_DELAY’
+  ret = ioctl(file_desc,IOCTL_SET_DELAY,delay);
+                        ^~~~~~~~~~~~~~~
+devlib.h:9:30: note: each undeclared identifier is reported only once for each function it appears in
+ #define IOCTL_SET_DELAY _IOR(major,0,int)
+                              ^
+control.c:15:24: note: in expansion of macro ‘IOCTL_SET_DELAY’
+  ret = ioctl(file_desc,IOCTL_SET_DELAY,delay);
+                        ^~~~~~~~~~~~~~~
 control.c: In function ‘main’:
-control.c:44:3: error: ‘cout’ undeclared (first use in this function)
-   cout<<"Can't fork new porcess(pid1). Terminating ...\n";
-   ^~~~
-control.c:44:3: note: each undeclared identifier is reported only once for each function it appears in
-control.c:75:11: error: too many arguments to function ‘write’
+control.c:77:11: error: too many arguments to function ‘write’
      while(write(file_desc,temp,1,0) != 1);
            ^~~~~
 In file included from control.c:2:0:
 /usr/include/unistd.h:369:16: note: declared here
  extern ssize_t write (int __fd, const void *__buf, size_t __n) __wur;
                 ^~~~~
-control.c:98:8: error: too many arguments to function ‘read’
+control.c:100:8: error: too many arguments to function ‘read’
      if(read(file_desc,temp,1,0) != 1)
         ^~~~
 In file included from control.c:2:0:
 /usr/include/unistd.h:363:16: note: declared here
  extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
                 ^~~~
-control.c:100:6: error: called object ‘delay’ is not a function or function pointer
+control.c:102:6: warning: implicit declaration of function ‘delay’ [-Wimplicit-function-declaration]
       delay(1000);
       ^~~~~
-control.c:22:9: note: declared here
- int len,delay;
-         ^~~~~
-control.c:101:9: error: too many arguments to function ‘read’
+control.c:103:9: error: too many arguments to function ‘read’
       if(read(file_desc,temp,1,0) != 1)
          ^~~~
 In file included from control.c:2:0:
 /usr/include/unistd.h:363:16: note: declared here
  extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
                 ^~~~
-control.c:130:8: error: too many arguments to function ‘read’
+control.c:132:8: error: too many arguments to function ‘read’
      if(read(file_desc,temp,1,0) != 1)
         ^~~~
 In file included from control.c:2:0:
 /usr/include/unistd.h:363:16: note: declared here
  extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
                 ^~~~
-control.c:132:6: error: called object ‘delay’ is not a function or function pointer
-      delay(1000);
-      ^~~~~
-control.c:22:9: note: declared here
- int len,delay;
-         ^~~~~
-control.c:133:9: error: too many arguments to function ‘read’
+control.c:135:9: error: too many arguments to function ‘read’
       if(read(file_desc,temp,1,0) != 1)
          ^~~~
 In file included from control.c:2:0:
 /usr/include/unistd.h:363:16: note: declared here
  extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
                 ^~~~
-control.c:162:6: error: called object ‘delay’ is not a function or function pointer
-      delay(1000);
-      ^~~~~
-control.c:22:9: note: declared here
- int len,delay;
-         ^~~~~
-control.c:170:19: error: too many arguments to function ‘write’
+control.c:172:19: error: too many arguments to function ‘write’
      int written = write(file_desc,temp,1,0);
                    ^~~~~
 In file included from control.c:2:0:
