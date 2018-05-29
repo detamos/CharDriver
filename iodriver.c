@@ -52,7 +52,7 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 			rear = -1;
 		msg[++rear] = tempData;
 		total++;
-		
+
 		if(get_user(tempData,buffer++))
 		{
 			return -EFAULT;
@@ -76,6 +76,12 @@ static int device_open(struct inode *inode, struct file *file)
 
 static int device_release(struct inode *inode,struct file *file)
 {
+	int i;
+	printk(KERN_INFO "Final Data Left : \n");
+	for(i=front;i<=rear;i++)
+	{
+		printk(KERN_INFO "%c",msg[i]);
+	}
 	printk(KERN_INFO "device_release(%p,%p)",inode,file);
 	Device_open --;
 //	module_put(THIS_MODULE);
