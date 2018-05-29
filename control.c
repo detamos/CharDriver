@@ -115,9 +115,9 @@ start_A :
 		}
 		if(flag == 0)
 			goto start_A;
+		noneed = wait(&status);
 		fclose(inFile);
 		close(file_desc);
-		noneed = wait(&status);
 	}
 	else
 	{
