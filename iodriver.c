@@ -32,7 +32,7 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 		return 0;
 	}
 	int total;
-	printk(KERN_INFO "Minor Number Reading : %d\n",iminor(filp->f_path.dentry->d_inode));
+	
 	if(iminor(filp->f_path.dentry->d_inode) == 0)
 	{
 		total = total1;
@@ -70,14 +70,14 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 	}
 
 	fixed = 1;
-
+	printk(KERN_INFO "Minor Number %d read %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesRead);
 	return bytesRead; 
 }
 ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
 	int bytesWritten = 0;
 	int length = strlen(buffer);
-	printk(KERN_INFO "Minor Number Writing : %d\n",iminor(filp->f_path.dentry->d_inode));
+
 	int total;
 	if(iminor(filp->f_path.dentry->d_inode) == 0)
 	{
@@ -113,7 +113,7 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 		bytesWritten++;
 		length--;
 	}
-
+	printk(KERN_INFO "Minor Number %d read %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesRead);
 	return bytesWritten; 
 }
 
