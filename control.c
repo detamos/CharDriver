@@ -88,6 +88,7 @@ int main()
 				while(write(file_desc,temp,1) != 1);
 			}
 			fclose(inFile);
+			wait(&status);
 		}
 		else
 		{
@@ -120,6 +121,7 @@ int main()
 			fclose(outFile);
 			close(file_desc);
 		}
+		wait(&status);
 	}
 	else
 	{
@@ -157,6 +159,7 @@ int main()
 			}
 
 			close(file_desc);
+			wait(&status);
 		}
 		else
 		{
