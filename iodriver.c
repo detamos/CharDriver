@@ -11,11 +11,11 @@
 
 static int Device_open = 0;
 static int Delay = 0;
-static char msg[MAX];
-static int front = 0;
-static int rear = -1;
-static int total = 0;
-static char tempData;
+char msg[MAX];
+int front = 0;
+int rear = -1;
+int total = 0;
+char tempData;
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
