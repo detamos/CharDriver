@@ -20,6 +20,17 @@ void ioctl_change_delay(int file_desc,int delay)
 	}
 }
 
+void delay(unsigned long milli)
+{
+	clock_t start = clock();
+	while(1)
+	{
+		clock_t end = clock();
+		if((end-start) >= milli)
+			break;
+	}
+}
+
 char *buffer;
 int len,Delay;
 FILE *inFile,*outFile;
