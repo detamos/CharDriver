@@ -7,6 +7,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+
+
 void ioctl_change_delay(int file_desc,int delay)
 {
 	int ret;
@@ -19,7 +21,7 @@ void ioctl_change_delay(int file_desc,int delay)
 }
 
 char *buffer;
-int len,delay;
+int len,Delay;
 FILE *inFile,*outFile;
 int front = 0,rear = -1,total = 0;
 
@@ -30,7 +32,7 @@ int main()
 	printf("Enter the size for buffer (in bytes) : ");
 	scanf("%d",&len);
 	printf("Enter the delay (in ms) : ");
-	scanf("%d",&delay);
+	scanf("%d",&Delay);
 	buffer = (char*)malloc(len);
 	if(buffer == NULL)
 	{
@@ -41,7 +43,7 @@ int main()
 	pid_t pid1 = fork();
 	if(pid1 < 0)
 	{
-		cout<<"Can't fork new porcess(pid1). Terminating ...\n";
+		printf("Can't fork new porcess(pid1). Terminating ...\n");
 		exit(-1);
 	}
 
@@ -50,7 +52,7 @@ int main()
 	{
 		if(pid2 < 0)
 		{
-			cout<<"Can't fork new porcess(pid2). Terminating ...\n";
+			printf("Can't fork new porcess(pid2). Terminating ...\n");
 			exit(-1);
 		}
 		if(pid2 == 0)
@@ -58,7 +60,7 @@ int main()
 			inFile = fopen("input","r");
 			if(inFile == NULL)
 			{
-				cout<<"Can't open input file. Terminating ...\n";
+				printf("Can't open input file. Terminating ...\n");
 				exit(-1);
 			}
 
@@ -66,7 +68,7 @@ int main()
 			int file_desc = open("/dev/iitpipe0",O_WRONLY);
 			if(file_desc == -1)
 			{
-				cout<<"Can't open device file (pid1=0,pid2=0)\n";
+				printf("Can't open device file (pid1=0,pid2=0)\n");
 				exit(-1);
 			}
 
@@ -81,14 +83,14 @@ int main()
 			outFile = fopen("output","w");
 			if(outFile == NULL)
 			{
-				cout<<"Can't open output file. Terminating ...\n";
+				printf("Can't open output file. Terminating ...\n");
 				exit(-1);
 			}
 
 			int file_desc = open("/dev/iitpipe1",O_RDONLY);
 			if(file_desc == -1)
 			{
-				cout<<"Can't open device file (pid1=0,pid2!=0)\n";
+				printf("Can't open device file (pid1=0,pid2!=0)\n");
 				exit(-1);
 			}
 
@@ -112,7 +114,7 @@ int main()
 	{
 		if(pid2 < 0)
 		{
-			cout<<"Can't fork new porcess(pid2(child)). Terminating ...\n";
+			printf("Can't fork new porcess(pid2(child)). Terminating ...\n");
 			exit(-1);
 		}
 		if(pid2 == 0)
@@ -120,7 +122,7 @@ int main()
 			int file_desc = open("/dev/iitpipe0",O_RDONLY);
 			if(file_desc == -1)
 			{
-				cout<<"Can't open device file (pid1=0,pid2!=0)\n";
+				printf("Can't open device file (pid1=0,pid2!=0)\n");
 				exit(-1);
 			}
 
@@ -150,7 +152,7 @@ int main()
 			int file_desc = open("/dev/iitpipe1",O_WRONLY);
 			if(file_desc == -1)
 			{
-				cout<<"Can't open device file (pid1=0,pid2!=0)\n";
+				printf("Can't open device file (pid1=0,pid2!=0)\n");
 				exit(-1);
 			}
 
