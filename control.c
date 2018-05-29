@@ -1,7 +1,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
-#include "devioctl.h"
+#include "devlib.h"
 #include <sys/types.h>
 #include <stdio.h>
 #include <string.h>

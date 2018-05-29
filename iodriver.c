@@ -4,20 +4,10 @@
 #include <linux/init.h>
 #include <linux/fs.h>
 #include <asm/uaccess.h>
-#include "devioctl.h"
+#include "devlib.h"
 #include <linux/delay.h>
 #include <linux/fs.h>
 #include <linux/syscalls.h>
-
-
-static int Device_open = 0;
-static int Delay = 0;
-
-static char *msgPtr = NULL;
-static char msg[100] = "Hello World!";
-
-extern long sys_read(unsigned int ,char __user *,size_t );
-extern long sys_write(unsigned int, const char __user *, size_t);
 
 static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
@@ -30,35 +20,15 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 		return 0;
 	}
 
-	int length = len,i = 0;
-	char inputBuf[len],buf[1];
-
-	mm_segment_t cur_fs = get_fs();
-
-	set_fs(get_ds());
-	int file_desc = sys_open("input",O_RDWR,0);
-	set_fs(cur_fs);
-
-	if(file_desc < 0)
+	int length = len;
+	while(length && total != MAX)
 	{
-		printk(KERN_INFO "Couldnt open the input file\n");
-		return -1;
-	}
-
-	set_fs(get_ds());
-	while(sys_read(file_desc,buf,1) == 1)
-	{
-		inputBuf[i++] = buf[0];
-	}
-	set_fs(cur_fs);	
-
-	i = 0;
-	while(length && i < len)
-	{
-		if(put_user(inputBuf[i++],buffer++))
+		char temp;
+		if(put_user(temp,buffer++))
 		{
 			return -EFAULT;
 		}
+		insert(temp);
 		length --;
 		bytesRead ++;
 	}
@@ -71,16 +41,15 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 {
 	int bytesWritten = 0;
 	int length = strlen(buffer);
-	msgPtr = msg;
+
 	char *ptrBuf = buffer;
-	while(len && length)
+	while(total && length)
 	{
-		get_user(*(msgPtr),ptrBuf++);
-		len--;
+		char temp = dequeue();
+		get_user(temp,ptrBuf++);
 		bytesWritten++;
 		length--;
 	}
-	*msgPtr = '\0';
 
 	return bytesWritten; 
 }
@@ -89,8 +58,7 @@ static int device_open(struct inode *inode, struct file *file)
 {
 	printk(KERN_INFO "device open(%p)\n",file);
 	Device_open++;
-	msgPtr = msg;
-
+	last = -1;
 //	try_module_get(THIS_MODULE);
 
 	return 0;	
@@ -122,7 +90,6 @@ struct file_operations fops =
 
 static int __init load_module(void)
 {
-	msgPtr = msg;
 	major = register_chrdev(0, DEVICE_NAME, &fops);
 	if(major < 0)
 	{
@@ -137,7 +104,6 @@ static int __init load_module(void)
 static void __exit remove_module(void)
 {
 	unregister_chrdev(major,DEVICE_NAME);
-	printk(KERN_INFO "Finale String : %s\n",msg);
 	printk(KERN_INFO "Removing the module : iodriver\n");
 }
 
