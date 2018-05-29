@@ -724,3 +724,61 @@
 [ 2168.327548] device_release(000000006ddbac83,0000000077773e66)
 [ 2168.327957] device_release(000000000580a1b6,00000000c13cff7e)
 [ 2172.986952] Removing the module : iodriver
+[ 4573.987898] Loading the module : iodriver with device id:243
+[ 4591.995795] device open(00000000dddaeb03)
+[ 4591.995972] Minor Number 1 read 0 bytes
+[ 4591.996019] device_release(000000000580a1b6,00000000dddaeb03)
+[ 4591.997367] device open(000000007a517346)
+[ 4591.999072] Minor Number 0 wrote 1 bytes
+[ 4591.999084] Minor Number 0 wrote 1 bytes
+[ 4591.999094] Minor Number 0 wrote 1 bytes
+[ 4591.999104] Minor Number 0 wrote 1 bytes
+[ 4591.999114] Minor Number 0 wrote 1 bytes
+[ 4591.999124] Minor Number 0 wrote 1 bytes
+[ 4591.999134] Minor Number 0 wrote 1 bytes
+[ 4591.999143] Minor Number 0 wrote 1 bytes
+[ 4591.999153] Minor Number 0 wrote 1 bytes
+[ 4591.999163] Minor Number 0 wrote 1 bytes
+[ 4591.999173] Minor Number 0 wrote 1 bytes
+[ 4591.999182] Minor Number 0 wrote 1 bytes
+[ 4591.999192] Minor Number 0 wrote 1 bytes
+[ 4591.999202] Minor Number 0 wrote 1 bytes
+[ 4591.999211] Minor Number 0 wrote 1 bytes
+[ 4591.999221] Minor Number 0 wrote 1 bytes
+[ 4591.999231] Minor Number 0 wrote 1 bytes
+[ 4591.999241] Minor Number 0 wrote 1 bytes
+[ 4591.999250] Minor Number 0 wrote 1 bytes
+[ 4591.999260] Minor Number 0 wrote 1 bytes
+[ 4591.999270] Minor Number 0 wrote 1 bytes
+[ 4591.999280] Minor Number 0 wrote 1 bytes
+[ 4591.999326] device_release(000000006ddbac83,000000007a517346)
+[ 5183.270005] Removing the module : iodriver
+[ 5202.835518] Loading the module : iodriver with device id:243
+[ 5208.293324] device open(000000005aad406e)
+[ 5208.293529] Minor Number 1 read 0 bytes
+[ 5208.293574] device_release(000000000580a1b6,000000005aad406e)
+[ 5208.294866] device open(00000000152ccada)
+[ 5208.295039] Minor Number 0 wrote 1 bytes
+[ 5208.295050] Minor Number 0 wrote 1 bytes
+[ 5208.295060] Minor Number 0 wrote 1 bytes
+[ 5208.295070] Minor Number 0 wrote 1 bytes
+[ 5208.295079] Minor Number 0 wrote 1 bytes
+[ 5208.295089] Minor Number 0 wrote 1 bytes
+[ 5208.295099] Minor Number 0 wrote 1 bytes
+[ 5208.295108] Minor Number 0 wrote 1 bytes
+[ 5208.295118] Minor Number 0 wrote 1 bytes
+[ 5208.295128] Minor Number 0 wrote 1 bytes
+[ 5208.295137] Minor Number 0 wrote 1 bytes
+[ 5208.295147] Minor Number 0 wrote 1 bytes
+[ 5208.295157] Minor Number 0 wrote 1 bytes
+[ 5208.295166] Minor Number 0 wrote 1 bytes
+[ 5208.295176] Minor Number 0 wrote 1 bytes
+[ 5208.295186] Minor Number 0 wrote 1 bytes
+[ 5208.295195] Minor Number 0 wrote 1 bytes
+[ 5208.295205] Minor Number 0 wrote 1 bytes
+[ 5208.295215] Minor Number 0 wrote 1 bytes
+[ 5208.295224] Minor Number 0 wrote 1 bytes
+[ 5208.295234] Minor Number 0 wrote 1 bytes
+[ 5208.295244] Minor Number 0 wrote 1 bytes
+[ 5208.295296] device_release(000000006ddbac83,00000000152ccada)
+[ 5216.686420] Removing the module : iodriver
