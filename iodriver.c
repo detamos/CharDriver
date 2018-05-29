@@ -129,9 +129,19 @@ static int device_release(struct inode *inode,struct file *file)
 {
 	int i;
 	printk(KERN_INFO "Final Data Left : \n");
-	for(i=front;i<=rear;i++)
+	if(iminor(filp->f_path.dentry->d_inode) == 0)
 	{
-		printk(KERN_INFO "%c",msg[i]);
+		for(i=front1;i<=rear1;i++)
+		{
+			printk(KERN_INFO "%c",msg1[i]);
+		}
+	}
+	else
+	{
+		for(i=front2;i<=rear2;i++)
+		{
+			printk(KERN_INFO "%c",msg2[i]);
+		}
 	}
 	printk(KERN_INFO "device_release(%p,%p)",inode,file);
 	Device_open --;
