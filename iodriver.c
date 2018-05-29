@@ -20,7 +20,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 		return 0;
 	}
 
-	int length = len;
+	int length = (int)len;
 	while(length && total != MAX)
 	{
 		char temp;
