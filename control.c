@@ -50,6 +50,7 @@ FILE *inFile,*outFile;
 int front = 0,rear = -1,total = 0;
 int status,noneed;
 
+int power = 0;
 
 int main()
 {
@@ -97,8 +98,10 @@ start_A :
 				}
 			}
 		}
+		while(power != 0);
 		while(1)
 		{
+			power = 1;
 			int ret = read(file_desc,temp,1);
 			if(ret == 0)
 				break;
@@ -108,6 +111,7 @@ start_A :
 				rear = -1;
 			buffer[++rear] = temp[0];
 			total++;
+			power = 0;
 		}
 		if(flag == 0)
 			goto start_A;
@@ -131,17 +135,21 @@ start_A :
 		int flag;
 start_B:
 		flag = 1;
+		while(power != 0);
 		while(1)
 		{
+			power = 1;
 			if(total == 0)
+			{
 				break;
+			}
 			temp[0] = buffer[front++];
 			if(front == len)
 			{
 				front = 0;
 			}
 			total--;
-
+			power = 0;
 			int ret = write(file_desc,temp,1);
 			if(ret == -1)
 			{
