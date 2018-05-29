@@ -17,7 +17,7 @@ int rear = -1;
 int total = 0;
 char tempData;
 
-static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
+ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
 	int bytesRead = 0;
 	static int fixed = 0;
@@ -49,7 +49,7 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 
 	return bytesRead; 
 }
-static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
+ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
 	int bytesWritten = 0;
 	int length = strlen(buffer);
