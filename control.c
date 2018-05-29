@@ -33,13 +33,13 @@ int ioctl_get_delay(int file_desc,int delay)
 	return ret;
 }
 
-void delay(unsigned long milli)
+void delay(double sec)
 {
 	clock_t start = clock();
 	while(1)
 	{
 		clock_t end = clock();
-		if((end-start) >= milli)
+		if((end-start)/CLOCKS_PER_SEC >= sec)
 			break;
 	}
 }
@@ -121,6 +121,7 @@ start_A :
 	}
 	else
 	{
+		delay(1);
 		int file_desc = open("/dev/iitpipe1",O_RDWR);
 		if(file_desc < 0)
 		{
