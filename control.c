@@ -98,7 +98,6 @@ start_A :
 				}
 			}
 		}
-		while(power != 0);
 		while(1)
 		{
 			power = 1;
@@ -140,7 +139,6 @@ start_A :
 		int flag;
 start_B:
 		flag = 1;
-		while(power != 0);
 		while(1)
 		{
 			power = 1;
