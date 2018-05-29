@@ -15,6 +15,6 @@ static char msg[MAX];
 static int front = 0;
 static int rear = -1;
 static int total = 0;
-
+static char tempData;
 
 #endif
