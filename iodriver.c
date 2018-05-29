@@ -113,7 +113,9 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 		bytesWritten++;
 		length--;
 	}
-	printk(KERN_INFO "Minor Number %d read %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesWritten);
+	printk(KERN_INFO "Minor Number %d wrote %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesWritten);
+	if(bytesWritten == 0 && total == MAX)
+		return -1;
 	return bytesWritten; 
 }
 
@@ -138,6 +140,8 @@ static long device_ioctl(struct file *file,unsigned int ioctl_num,unsigned long 
 {
 	if(ioctl_num == IOCTL_SET_DELAY)
 		Delay = (int)(ioctl_param);
+	else if(ioctl_num == IOCTL_GET_DELAY)
+		return Delay;
 	return 0;
 }
 
