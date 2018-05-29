@@ -54,7 +54,7 @@ int main()
 		}
 
 		int numBytes = read(file_desc,buffer,len);
-
+		printf("Number of bytes read : %d\n",numBytes);
 		close(file_desc);
 	}
 	else
