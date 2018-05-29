@@ -110,7 +110,7 @@ int main()
 			{
 				if(read(file_desc,temp,1) != 1)
 				{
-					delay(1000);
+					delay(10000);
 					if(read(file_desc,temp,1) != 1)
 						break;
 				}
@@ -142,7 +142,7 @@ int main()
 			{
 				if(read(file_desc,temp,1) != 1)
 				{
-					delay(1000);
+					delay(2000);
 					if(read(file_desc,temp,1) != 1)
 						break;
 				}
@@ -172,7 +172,7 @@ int main()
 			{
 				if(total == 0)
 				{
-					delay(1000);
+					delay(2000);
 					if(total == 0)
 						break;
 				}
