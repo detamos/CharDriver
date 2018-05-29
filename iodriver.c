@@ -54,7 +54,10 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 			front = 0;
 		total--;
 
-		get_user(tempData,buffer++);
+		if(get_user(tempData,buffer++))
+		{
+			return -EFAULT;
+		}
 
 		bytesWritten++;
 		length--;
