@@ -16,27 +16,5 @@ static int front = 0;
 static int rear = -1;
 static int total = 0;
 
-void insert(char data)
-{
-	if(total != MAX)
-	{
-		if(rear == MAX-1)
-		{
-			rear--;
-		}
-
-		msg[++rear] = data;
-		total++;
-	}
-}
-
-char dequeue()
-{
-	char ret = msg[front++];
-	if(front == MAX)
-		front = 0;
-	total--;
-	return ret;	
-}
 
 #endif

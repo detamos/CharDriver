@@ -28,7 +28,12 @@ static ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *off
 		{
 			return -EFAULT;
 		}
-		insert(temp);
+		
+		if(rear == MAX-1)
+			rear = -1;
+		msg[++rear] = temp;
+		total++;
+		
 		length --;
 		bytesRead ++;
 	}
@@ -45,8 +50,13 @@ static ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff
 	char *ptrBuf = buffer;
 	while(total && length)
 	{
-		char temp = dequeue();
+		char temp = msg[front++];
+		if(front == MAX)
+			front = 0;
+		total--;
+
 		get_user(temp,ptrBuf++);
+		
 		bytesWritten++;
 		length--;
 	}
@@ -58,7 +68,6 @@ static int device_open(struct inode *inode, struct file *file)
 {
 	printk(KERN_INFO "device open(%p)\n",file);
 	Device_open++;
-	last = -1;
 //	try_module_get(THIS_MODULE);
 
 	return 0;	
