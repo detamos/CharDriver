@@ -9,7 +9,6 @@
 #include <linux/fs.h>
 #include <linux/syscalls.h>
 
-static int major;
 static int Device_open = 0;
 static int Delay = 0;
 static char msg[MAX];

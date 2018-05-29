@@ -74,7 +74,7 @@ int main()
 
 			while(fscanf(inFile,"%c",&temp[0]) == 1)
 			{
-				while(write(file_desc,temp,1,0) != 1);
+				while(write(file_desc,temp,1) != 1);
 			}
 			fclose(inFile);
 		}
@@ -97,10 +97,10 @@ int main()
 			char temp[1];
 			while(1)
 			{
-				if(read(file_desc,temp,1,0) != 1)
+				if(read(file_desc,temp,1) != 1)
 				{
 					delay(1000);
-					if(read(file_desc,temp,1,0) != 1)
+					if(read(file_desc,temp,1) != 1)
 						break;
 				}
 				fprintf(outFile,"%c",temp[0]);
@@ -129,10 +129,10 @@ int main()
 			char temp[1];
 			while(1)
 			{
-				if(read(file_desc,temp,1,0) != 1)
+				if(read(file_desc,temp,1) != 1)
 				{
 					delay(1000);
-					if(read(file_desc,temp,1,0) != 1)
+					if(read(file_desc,temp,1) != 1)
 						break;
 				}
 				if(total == len)
@@ -169,7 +169,7 @@ int main()
 				if(front == len)
 					front = 0;
 				total --;
-				int written = write(file_desc,temp,1,0);
+				int written = write(file_desc,temp,1);
 			}
 		}
 	}

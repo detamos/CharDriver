@@ -8,4 +8,6 @@
 #define MAX 		1000000
 #define IOCTL_SET_DELAY _IOR(major,0,int)
 
+static int major;
+
 #endif
