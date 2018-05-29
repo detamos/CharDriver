@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/wait.h>
 
 
 void ioctl_change_delay(int file_desc,int delay)
@@ -35,6 +36,7 @@ char *buffer;
 int len,Delay;
 FILE *inFile,*outFile;
 int front = 0,rear = -1,total = 0;
+int status,noneed;
 
 
 int main()
@@ -88,7 +90,7 @@ int main()
 				while(write(file_desc,temp,1) != 1);
 			}
 			fclose(inFile);
-			wait(&status);
+			noneed = wait(&status);
 		}
 		else
 		{
@@ -121,7 +123,7 @@ int main()
 			fclose(outFile);
 			close(file_desc);
 		}
-		wait(&status);
+		noneed = wait(&status);
 	}
 	else
 	{
@@ -159,7 +161,7 @@ int main()
 			}
 
 			close(file_desc);
-			wait(&status);
+			noneed = wait(&status);
 		}
 		else
 		{
