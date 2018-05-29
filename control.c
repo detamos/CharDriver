@@ -130,6 +130,12 @@ start_A :
 		FILE *outFile = NULL;
 		outFile = fopen("output","w");
 
+		if(outFile == NULL)
+		{
+			printf("Can't open output file /dev/iitpipe1\n");
+			exit(-1);
+		}
+
 		char temp[1];
 		int flag;
 start_B:
@@ -165,7 +171,7 @@ start_B:
 			fprintf(outFile,"%c",temp[0]);
 		}
 
-		if(flag == 0)
+//		if(flag == 0)
 			goto start_B;
 
 		fclose(outFile);
