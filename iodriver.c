@@ -9,6 +9,7 @@
 #include <linux/fs.h>
 #include <linux/syscalls.h>
 #include <linux/vmalloc.h>
+#include <linux/random.h>
 
 static int Device_open = 0;
 static int Delay = 0;
@@ -160,7 +161,8 @@ static int __init load_module(void)
 	major = register_chrdev(0, DEVICE_NAME, &fops);
 	msg1 = (char *)vmalloc(MAX);
 	msg2 = (char *)vmalloc(MAX);
-	for(int i=0;i<MAX;i++)
+	int i;
+	for(i=0;i<MAX;i++)
 	{	
 		int j;
 		get_random_bytes(&j,sizeof(j));
