@@ -8,11 +8,12 @@
 #include <linux/delay.h>
 #include <linux/fs.h>
 #include <linux/syscalls.h>
+#include <linux/vmalloc.h>
 
 static int Device_open = 0;
 static int Delay = 0;
-char msg1[MAX];
-char msg2[MAX];
+char *msg1;
+char *msg2;
 int front2 = 0;
 int rear2 = -1;
 int total2 = 0;
@@ -157,6 +158,15 @@ struct file_operations fops =
 static int __init load_module(void)
 {
 	major = register_chrdev(0, DEVICE_NAME, &fops);
+	msg1 = (char *)vmalloc(MAX);
+	msg2 = (char *)vmalloc(MAX);
+	for(int i=0;i<MAX;i++)
+	{	
+		int j;
+		get_random_bytes(&j,sizeof(j));
+		j %= 27;
+		msg1[MAX] = (char)(j + 65);
+	}
 	if(major < 0)
 	{
 		printk(KERN_INFO "Can't Register Device %s \n",DEVICE_NAME);

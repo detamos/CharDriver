@@ -69,112 +69,12 @@ int main()
 	pid_t pid = fork();
 	if(pid == 0)
 	{
-		int file_desc = open("/dev/iitpipe0",O_RDWR);
-		if(file_desc < 0)
-		{
-			printf("Can't open device file /dev/iitpipe0\n");
-			exit(-1);
-		}
-
-		FILE *inFile = NULL;
-		inFile = fopen("input","r");
-		char temp[1];
-		int flag;
-start_A :
-		flag = 1;
-		while(fscanf(inFile,"%c",&temp[0]) == 1 && flag == 1)
-		{
-			while(1)
-			{
-				int ret = write(file_desc,temp,1);
-				if(ret == 0)
-					continue;
-				if(ret == 1)
-					break;
-				if(ret == -1)
-				{
-					flag = 0;
-					break;
-				}
-			}
-		}
-		while(1)
-		{
-			power = 1;
-			int ret = read(file_desc,temp,1);
-			if(ret == 0)
-				break;
-			if(total == len)
-				continue;
-			if(rear == len-1)
-				rear = -1;
-			buffer[++rear] = temp[0];
-			total++;
-			power = 0;
-		}
-		if(flag == 0)
-			goto start_A;
-		fclose(inFile);
-		close(file_desc);
+		
 	}
 	else
 	{
-		int file_desc = open("/dev/iitpipe1",O_RDWR);
-		if(file_desc < 0)
-		{
-			printf("Can't open device file /dev/iitpipe1\n");
-			exit(-1);
-		}
 
-		FILE *outFile = NULL;
-		outFile = fopen("output","w");
-
-		if(outFile == NULL)
-		{
-			printf("Can't open output file /dev/iitpipe1\n");
-			exit(-1);
-		}
-
-		char temp[1];
-		int flag;
-start_B:
-		flag = 1;
-		while(1)
-		{
-			power = 1;
-			if(total == 0)
-			{
-				break;
-			}
-			temp[0] = buffer[front++];
-			if(front == len)
-			{
-				front = 0;
-			}
-			total--;
-			power = 0;
-			int ret = write(file_desc,temp,1);
-			if(ret == -1)
-			{
-				flag = 0;
-				break;
-			}
-		}
-
-		while(1)
-		{
-			int ret = read(file_desc,temp,1);
-			if(ret == 0)
-				break;
-			fprintf(outFile,"%c",temp[0]);
-		}
-
-//		if(flag == 0)
-			goto start_B;
-
-		fclose(outFile);
-		close(file_desc);
 	}
-
+	
 	return 0;
 }
