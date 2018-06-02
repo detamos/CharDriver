@@ -61,7 +61,7 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 	while(total2 != MAX && length)
 	{
 		char tempData;
-		if(get_user(tempData,buffer++))
+		if(copy_from_user(tempData,buffer++,len))
 		{
 			return -EFAULT;
 		}
