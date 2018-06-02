@@ -52,6 +52,16 @@ int status,noneed;
 
 int power = 0;
 
+void print(char *s,int l)
+{
+	int i = 0;
+	while(i < l)
+	{
+		printf("%c",s[i++]);
+	}
+	printf("\n");
+}
+
 int main()
 {
 	buffer = NULL;
@@ -67,7 +77,7 @@ int main()
 	}
 
 	pid_t pid = fork();
-	if(pid)
+	if(pid == 0)
 	{
 		int file_desc = open("/dev/iitpipe0",O_RDWR);
 		char temp[1];
@@ -80,6 +90,7 @@ int main()
 				rear = -1;
 			buffer[++rear] = temp[0];
 			total++;
+			print(buffer,len);
 			power = 0;
 		}
 		close(file_desc);
@@ -96,6 +107,8 @@ int main()
 			while(power);
 			power = 1;
 			temp[0] = buffer[front++];
+			printf("%c written\n",temp[0]);
+			print(buffer,len);
 			if(front == len)
 				front = 0;
 			total--;
