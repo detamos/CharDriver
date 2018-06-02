@@ -87,12 +87,11 @@ int main()
 			power = 0;
 			ctr++;
 		}
-		printf("COUNTER : %d\n",ctr);
 		close(file_desc);
 	}
 	else
 	{
-	/*	int file_desc = open("/dev/iitpipe1",O_RDWR);
+		int file_desc = open("/dev/iitpipe1",O_RDWR);
 		delay(1);
 		char temp[1];
 		do
@@ -107,7 +106,7 @@ int main()
 			total--;
 			power = 0;
 		}while(write(file_desc,temp,1) == 1);
-	*/
+	
 	}
 	
 	return 0;
