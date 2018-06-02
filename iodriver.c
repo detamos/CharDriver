@@ -60,15 +60,14 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 
 	while(total2 != MAX && length)
 	{
-		char tempData;
+		char tempData[1];
 		if(copy_from_user(tempData,buffer++,len))
 		{
 			return -EFAULT;
 		}
-		printk(KERN_INFO "return %d\n",tempData);
 		if(rear2 == MAX-1)
 			rear2 = -1;
-		msg2[++rear2] = tempData;
+		msg2[++rear2] = tempData[0];
 		total2++;
 
 		bytesWritten++;
