@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <sys/wait.h>
+#include <pthread.h>
 
 
 void ioctl_set_delay(int file_desc,int delay)
@@ -62,6 +63,39 @@ void print(char *s,int l)
 	printf("\n");
 }
 
+void *func_read(void *arg)
+{
+	int file_desc = open("/dev/iitpipe0",O_RDWR);
+
+	char temp[1];
+	while(read(file_desc,temp,1) == 1)
+	{
+		if(rear == MAX-1)
+			rear = -1;
+		buffer[++rear] = temp[0];
+		total++;
+	}
+
+	close(file_desc);
+}
+
+void *func_write(void *arg)
+{
+	int file_desc = open("/dev/iitpipe1",O_RDWR);
+
+	char temp[1];
+	while(total == 0);
+	do
+	{	
+		if(front == MAX)
+			front = 0;
+		temp[0] = buffer[front++];
+		total--;
+	}while(write(file_desc,temp,1) == 1);
+
+	close(file_desc);
+}
+
 int main()
 {
 	buffer = NULL;
@@ -76,42 +110,12 @@ int main()
 		exit(-1);
 	}
 
-	pid_t pid = fork();
-	if(pid == 0)
-	{
-		int file_desc = open("/dev/iitpipe0",O_RDWR);
-		char temp[1];
-		int ctr = 0;
-		while(read(file_desc,temp,1) == 1)
-		{
-			while(power);
-			power = 1;
-			if(rear == len - 1)
-				rear = -1;
-			buffer[++rear] = temp[0];
-			total++;
-			print(buffer,len);
-			power = 0;
-		}
-		close(file_desc);
-	}
-	else
-	{
-		int file_desc = open("/dev/iitpipe1",O_RDWR);
-		char temp[1];
-		while(1)
-		{
-			if(front == MAX)
-				front = 0;
-			temp[0] = buffer[front++];
-			total--;
-			if(write(file_desc,temp,1) == 1)
-				continue;
-			else
-				break;
-		}
-		close(file_desc);
-	}
-	
+	pthread_t read_t,write_t;
+	pthread_create(&read_t,NULL,func_read,NULL);
+	pthread_create(&write_t,NULL,func_write,NULL);
+
+	pthread_join(read_t,NULL);
+	pthread_join(write_t,NULL);
+
 	return 0;
 }
