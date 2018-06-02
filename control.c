@@ -101,10 +101,12 @@ int main()
 		
 		char temp[1];
 		printf("Am i here ??\n");
-		do
+		while(1)
 		{
 			if(total == 0)
 				continue;
+			if(write(file_desc,temp,1) != 1)
+				break;
 			while(power);
 			power = 1;
 			temp[0] = buffer[front++];
@@ -114,7 +116,7 @@ int main()
 				front = 0;
 			total--;
 			power = 0;
-		}while(write(file_desc,temp,1) == 1);
+		}
 		printf("Then why isnt it working ??\n");
 		close(file_desc);
 	}
