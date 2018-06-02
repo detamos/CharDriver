@@ -117,14 +117,14 @@ static int __init load_module(void)
 		printk(KERN_INFO "Can't Register Device %s \n",DEVICE_NAME);
 		return -EFAULT;
 	}
-//	printk(KERN_INFO "Loading the module : iodriver with device id:%d with string %s\n",major,msg1);
+	printk(KERN_INFO "Loading the module : iodriver with device id:%d with string %s\n",major,msg1);
 
 	return 0;
 }
 
 static void __exit remove_module(void)
 {
-//	printk(KERN_INFO "Removing the module : iodriver with string : %s\n",msg2);
+	printk(KERN_INFO "Removing the module : iodriver with string : %s\n",msg2);
 	unregister_chrdev(major,DEVICE_NAME);
 }
 
