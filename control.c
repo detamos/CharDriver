@@ -106,7 +106,6 @@ int main()
 			total--;
 			power = 0;
 		}while(write(file_desc,temp,1) == 1);
-	
 	}
 	
 	return 0;
