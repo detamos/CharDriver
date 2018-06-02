@@ -33,7 +33,7 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 		return 0;
 	}
 	
-	size_t length = len;
+	int length = len;
 	while(length && total1)
 	{
 		char tempData;
@@ -140,8 +140,8 @@ static int __init load_module(void)
 
 static void __exit remove_module(void)
 {
-	unregister_chrdev(major,DEVICE_NAME);
 	printk(KERN_INFO "Removing the module : iodriver with string : %s\n",msg2);
+	unregister_chrdev(major,DEVICE_NAME);
 }
 
 module_init(load_module);
