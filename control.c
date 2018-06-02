@@ -72,8 +72,12 @@ int main()
 		int file_desc = open("/dev/iitpipe0",O_RDWR);
 		char temp[1];
 		int ctr = 0;
-		while(read(file_desc,temp,1) == 1)
+		while(1)
 		{
+			int ret = read(file_desc,temp,1);
+			printf("%d\n",ret);
+			if(ret != 1)
+				break;
 			while(power);
 			power = 1;
 			if(rear == len - 1)
