@@ -82,7 +82,7 @@ int main()
 	}
 	else
 	{
-		int file_desc = open("/dev/iitpipe1",O_RDWR);
+	/*	int file_desc = open("/dev/iitpipe1",O_RDWR);
 		char temp[1];
 		do
 		{
@@ -93,6 +93,7 @@ int main()
 				front = 0;
 			total--;
 		}while(write(file_desc,temp,1) == 1);
+	*/
 	}
 	
 	return 0;
