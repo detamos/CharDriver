@@ -27,11 +27,11 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 	int bytesRead = 0;
 	static int fixed = 0;
 
-	if(fixed == 1)
-	{
-		fixed = 0;
-		return 0;
-	}
+//	if(fixed == 1)
+//	{
+//		fixed = 0;
+//		return 0;
+//	}
 	
 	int length = len;
 	while(length && total1)
