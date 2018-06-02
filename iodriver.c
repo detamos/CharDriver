@@ -164,7 +164,7 @@ static int __init load_module(void)
 	int i;
 	for(i=0;i<MAX;i++)
 	{	
-		msg1[i] = (char)((i%27) + 65);
+		msg1[i] = (char)((i%26) + 65);
 	}
 	if(major < 0)
 	{
