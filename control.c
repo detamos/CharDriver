@@ -69,7 +69,8 @@ int main()
 	pid_t pid = fork();
 	if(pid == 0)
 	{
-		int file_desc = open("/dev/iitpipe0",ORDWR);
+		int file_desc = open("/dev/iitpipe0",O_RDWR);
+		char temp[1];
 		while(read(file_desc,temp,1) == 1)
 		{
 			if(rear == len - 1)
@@ -81,7 +82,8 @@ int main()
 	}
 	else
 	{
-		int file_desc = open("/dev/iitpipe1",ORDWR);
+		int file_desc = open("/dev/iitpipe1",O_RDWR);
+		char temp[1];
 		do
 		{
 			if(total == 0)
