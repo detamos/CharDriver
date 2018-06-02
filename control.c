@@ -99,23 +99,17 @@ int main()
 	{
 		int file_desc = open("/dev/iitpipe1",O_RDWR);
 		char temp[1];
-		printf("Am i here ??\n");
 		while(1)
 		{
-			printf("Total : %d\n",total);
-			if(total == 0)
-				continue;
-			while(power);
-			power = 1;
-			temp[0] = buffer[front++];
-			if(write(file_desc,temp,1) != 1)
-				break;
-			if(front == len)
+			if(front == MAX)
 				front = 0;
+			temp[0] = buffer[front++];
 			total--;
-			power = 0;
+			if(write(file_desc,temp,1) == 1)
+				continue;
+			else
+				break;
 		}
-		printf("Then why isnt it working ??\n");
 		close(file_desc);
 	}
 	
