@@ -90,10 +90,10 @@ int main()
 		char temp[1];
 		do
 		{
-			while(power);
-			power = 1;
 			if(total == 0)
 				continue;
+			while(power);
+			power = 1;
 			temp[0] = buffer[front++];
 			if(front == len)
 				front = 0;
