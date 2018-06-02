@@ -98,8 +98,9 @@ int main()
 	else
 	{
 		int file_desc = open("/dev/iitpipe1",O_RDWR);
-		delay(0.1);
+		
 		char temp[1];
+		printf("Am i here ??\n");
 		do
 		{
 			if(total == 0)
@@ -114,6 +115,8 @@ int main()
 			total--;
 			power = 0;
 		}while(write(file_desc,temp,1) == 1);
+		printf("Then why isnt it working ??\n");
+		close(file_desc);
 	}
 	
 	return 0;
