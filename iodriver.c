@@ -21,7 +21,6 @@ int total2 = 0;
 int front1 = 0;
 int rear1 = -1;
 int total1 = 0;
-char tempData;
 
 ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
@@ -37,6 +36,7 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 	size_t length = len;
 	while(length && total1)
 	{
+		char tempData;
 		if(put_user(tempData,buffer++))
 		{
 			return -EFAULT;
@@ -60,9 +60,10 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 
 	while(total2 != MAX && length)
 	{
+		char tempData;
 		if(rear2 == MAX-1)
 			rear2 = -1;
-		msg1[++rear2] = tempData;
+		msg2[++rear2] = tempData;
 		total2++;
 		if(get_user(tempData,buffer++))
 		{

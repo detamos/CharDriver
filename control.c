@@ -73,10 +73,13 @@ int main()
 		char temp[1];
 		while(read(file_desc,temp,1) == 1)
 		{
+			while(power);
+			power = 1;
 			if(rear == len - 1)
 				rear = -1;
 			buffer[++rear] = temp[0];
 			total++;
+			power = 0;
 		}
 		close(file_desc);
 	}
@@ -86,12 +89,15 @@ int main()
 		char temp[1];
 		do
 		{
+			while(power);
+			power = 1;
 			if(total == 0)
 				continue;
 			temp[0] = buffer[front++];
 			if(front == len)
 				front = 0;
 			total--;
+			power = 0;
 		}while(write(file_desc,temp,1) == 1);
 	
 	}
