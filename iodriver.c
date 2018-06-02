@@ -117,7 +117,7 @@ static int __init load_module(void)
 	msg1 = (char *)vmalloc(MAX);
 	msg2 = (char *)vmalloc(MAX);
 	int i;
-	while(total1 < MAX);
+	while(total1 < MAX)
 	{
 		if(rear1 == MAX-1)
 			rear1 = -1;	
