@@ -23,7 +23,7 @@ int rear1 = -1;
 int total1 = 0;
 char tempData;
 
-/*ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
+ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
 	int bytesRead = 0;
 	static int fixed = 0;
@@ -155,7 +155,7 @@ struct file_operations fops =
 	.open = device_open,
 	.release = device_release,
 };
-*/
+
 static int __init load_module(void)
 {
 	major = register_chrdev(0, DEVICE_NAME, &fops);

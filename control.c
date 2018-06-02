@@ -69,11 +69,28 @@ int main()
 	pid_t pid = fork();
 	if(pid == 0)
 	{
-		
+		int file_desc = open("/dev/iitpipe0",ORDWR);
+		while(read(file_desc,temp,1) == 1)
+		{
+			if(rear == len - 1)
+				rear = -1;
+			buffer[++rear] = temp[0];
+			total++;
+		}
+		close(file_desc);
 	}
 	else
 	{
-
+		int file_desc = open("/dev/iitpipe1",ORDWR);
+		do
+		{
+			if(total == 0)
+				continue;
+			temp[0] = buffer[front++];
+			if(front == len)
+				front = 0;
+			total--;
+		}while(write(file_desc,temp,1) == 1);
 	}
 	
 	return 0;
