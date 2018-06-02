@@ -13,6 +13,9 @@
 
 static int Device_open = 0;
 static int Delay = 0;
+char tempData1,tempData2;
+int bytesRead = 0;
+int bytesWritten = 0;
 char *msg1;
 char *msg2;
 int front2 = 0;
@@ -24,17 +27,7 @@ int total1 = 0;
 
 ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
-	int bytesRead = 0;
-	static int fixed = 0;
-
-//	if(fixed == 1)
-//	{
-//		fixed = 0;
-//		return 0;
-//	}
-	
-	int length = len;
-	while(length && total1)
+	while(len && total1)
 	{
 		char tempData;
 		tempData = msg1[front1++];
@@ -45,33 +38,28 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 		if(front1 == MAX)
 			front1 = 0;
 		total1--;		
-		length --;
+		len --;
 		bytesRead ++;
 	}
 
-	fixed = 1;
 	printk(KERN_INFO "Minor Number %d read %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesRead);
 	return bytesRead; 
 }
 ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
-	int bytesWritten = 0;
-	int length = len;
-
-	while(total2 != MAX && length)
+	while(total2 != MAX && len)
 	{
-		char tempData[1];
-		if(copy_from_user(tempData,buffer++,len))
+		if(get_user(tempData,buffer++))
 		{
 			return -EFAULT;
 		}
 		if(rear2 == MAX-1)
 			rear2 = -1;
-		msg2[++rear2] = tempData[0];
+		msg2[++rear2] = tempData;
 		total2++;
 
 		bytesWritten++;
-		length--;
+		len--;
 	}
 	printk(KERN_INFO "Minor Number %d wrote %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesWritten);
 	printk(KERN_INFO "Current msg : %s\n",msg2);
