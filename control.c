@@ -72,12 +72,8 @@ int main()
 		int file_desc = open("/dev/iitpipe0",O_RDWR);
 		char temp[1];
 		int ctr = 0;
-		while(1)
+		while(read(file_desc,temp,1) == 1)
 		{
-			int ret = read(file_desc,temp,1);
-			printf("%d\n",ret);
-			if(ret != 1)
-				break;
 			while(power);
 			power = 1;
 			if(rear == len - 1)
@@ -85,14 +81,13 @@ int main()
 			buffer[++rear] = temp[0];
 			total++;
 			power = 0;
-			ctr++;
 		}
 		close(file_desc);
 	}
 	else
 	{
 		int file_desc = open("/dev/iitpipe1",O_RDWR);
-		delay(1);
+		delay(0.1);
 		char temp[1];
 		do
 		{
