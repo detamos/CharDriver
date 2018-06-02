@@ -164,10 +164,7 @@ static int __init load_module(void)
 	int i;
 	for(i=0;i<MAX;i++)
 	{	
-		int j;
-		get_random_bytes(&j,sizeof(j));
-		j %= 27;
-		msg1[MAX] = (char)(j + 65);
+		msg1[i] = (char)((i%27) + 65);
 	}
 	if(major < 0)
 	{
@@ -182,7 +179,7 @@ static int __init load_module(void)
 static void __exit remove_module(void)
 {
 	unregister_chrdev(major,DEVICE_NAME);
-	printk(KERN_INFO "Removing the module : iodriver\n");
+	printk(KERN_INFO "Removing the module : iodriver with string : %s\n",msg2);
 }
 
 module_init(load_module);
