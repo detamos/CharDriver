@@ -121,7 +121,7 @@ static int __init load_module(void)
 	{
 		if(rear1 == MAX-1)
 			rear1 = -1;	
-		msg1[rear1++] = (char)((i%26) + 65);
+		msg1[++rear1] = (char)((i%26) + 65);
 		total1++;
 		i++;
 	}
