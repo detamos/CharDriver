@@ -71,6 +71,7 @@ int main()
 	{
 		int file_desc = open("/dev/iitpipe0",O_RDWR);
 		char temp[1];
+		int ctr = 0;
 		while(read(file_desc,temp,1) == 1)
 		{
 			while(power);
@@ -80,7 +81,9 @@ int main()
 			buffer[++rear] = temp[0];
 			total++;
 			power = 0;
+			ctr++;
 		}
+		printf("COUNTER : %d\n",ctr);
 		close(file_desc);
 	}
 	else
