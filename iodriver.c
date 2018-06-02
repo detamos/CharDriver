@@ -75,7 +75,7 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 		length--;
 	}
 	printk(KERN_INFO "Minor Number %d wrote %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesWritten);
-	prinkt(KERN_INFO "Current msg : %s\n",msg2);
+	printk(KERN_INFO "Current msg : %s\n",msg2);
 	return bytesWritten; 
 }
 
