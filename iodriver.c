@@ -23,15 +23,15 @@ int rear2 = -1;
 int total2 = 0;
 int front1 = 0;
 int rear1 = -1;
+int i;
 int total1 = 0;
 
 ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 {
 	while(len && total1)
 	{
-		char tempData;
-		tempData = msg1[front1++];
-		if(put_user(tempData,buffer++))
+		tempData1 = msg1[front1++];
+		if(put_user(tempData1,buffer++))
 		{
 			return -EFAULT;
 		}
@@ -49,13 +49,13 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 {
 	while(total2 != MAX && len)
 	{
-		if(get_user(tempData,buffer++))
+		if(get_user(tempData2,buffer++))
 		{
 			return -EFAULT;
 		}
 		if(rear2 == MAX-1)
 			rear2 = -1;
-		msg2[++rear2] = tempData;
+		msg2[++rear2] = tempData2;
 		total2++;
 
 		bytesWritten++;
@@ -106,7 +106,6 @@ static int __init load_module(void)
 	major = register_chrdev(0, DEVICE_NAME, &fops);
 	msg1 = (char *)vmalloc(MAX);
 	msg2 = (char *)vmalloc(MAX);
-	int i;
 	while(total1 < MAX)
 	{
 		if(rear1 == MAX-1)
