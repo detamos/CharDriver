@@ -98,20 +98,18 @@ int main()
 	else
 	{
 		int file_desc = open("/dev/iitpipe1",O_RDWR);
-		
 		char temp[1];
 		printf("Am i here ??\n");
 		while(1)
 		{
+			printf("Total : %d\n",total);
 			if(total == 0)
 				continue;
-			if(write(file_desc,temp,1) != 1)
-				break;
 			while(power);
 			power = 1;
 			temp[0] = buffer[front++];
-			printf("%c written\n",temp[0]);
-			print(buffer,len);
+			if(write(file_desc,temp,1) != 1)
+				break;
 			if(front == len)
 				front = 0;
 			total--;
