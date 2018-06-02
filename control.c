@@ -10,6 +10,14 @@
 #include <sys/wait.h>
 #include <pthread.h>
 
+char *buffer;
+int len,Delay;
+FILE *inFile,*outFile;
+int front = 0,rear = -1,total = 0;
+int status,noneed;
+
+int power = 0;
+pthread_mutex_t lock;
 
 void ioctl_set_delay(int file_desc,int delay)
 {
@@ -45,14 +53,6 @@ void delay(double sec)
 	}
 }
 
-char *buffer;
-int len,Delay;
-FILE *inFile,*outFile;
-int front = 0,rear = -1,total = 0;
-int status,noneed;
-
-int power = 0;
-
 void print(char *s,int l)
 {
 	int i = 0;
@@ -70,10 +70,12 @@ void *func_read(void *arg)
 	char temp[1];
 	while(read(file_desc,temp,1) == 1)
 	{
+		pthread_mutex_lock(&lock);
 		if(rear == MAX-1)
 			rear = -1;
 		buffer[++rear] = temp[0];
 		total++;
+		pthread_mutex_unlock(&lock);
 	}
 
 	close(file_desc);
@@ -87,10 +89,13 @@ void *func_write(void *arg)
 	while(total == 0);
 	do
 	{	
+		pthread_mutex_lock(&lock);
 		if(front == MAX)
 			front = 0;
 		temp[0] = buffer[front++];
 		total--;
+		pthread_mutex_unlock(&lock);
+
 	}while(write(file_desc,temp,1) == 1);
 
 	close(file_desc);
@@ -98,6 +103,11 @@ void *func_write(void *arg)
 
 int main()
 {
+	if(pthread_mutex_init(&lock,NULL) != 0)
+	{
+		printf("Mutex initiation failed\n");
+		exit(-1);
+	}
 	buffer = NULL;
 	printf("Enter the size for buffer (in bytes) : ");
 	scanf("%d",&len);
@@ -116,6 +126,7 @@ int main()
 
 	pthread_join(read_t,NULL);
 	pthread_join(write_t,NULL);
+	pthread_mutex_destroy(&lock);
 
 	return 0;
 }
