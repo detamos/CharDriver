@@ -73,8 +73,11 @@ void *func_read(void *arg)
 		pthread_mutex_lock(&lock);
 		if(rear == MAX-1)
 			rear = -1;
-		buffer[++rear] = temp[0];
-		total++;
+		if(total < MAX)
+		{
+			buffer[++rear] = temp[0];
+			total++;
+		}
 		pthread_mutex_unlock(&lock);
 	}
 
@@ -92,8 +95,11 @@ void *func_write(void *arg)
 		pthread_mutex_lock(&lock);
 		if(front == MAX)
 			front = 0;
-		temp[0] = buffer[front++];
-		total--;
+		if(total > 0)
+		{
+			temp[0] = buffer[front++];
+			total--;
+		}
 		pthread_mutex_unlock(&lock);
 
 	}while(write(file_desc,temp,1) == 1);
