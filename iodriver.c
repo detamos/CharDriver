@@ -43,7 +43,7 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 		bytesRead ++;
 	}
 
-	printk(KERN_INFO "Minor Number %d read %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesRead);
+//	printk(KERN_INFO "Minor Number %d read %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesRead);
 	return bytesRead; 
 }
 ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
@@ -52,7 +52,6 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 	while(total2 != MAX && len)
 	{
 		int ret = copy_from_user(tempData2,buffer++,1);
-		printk(KERN_INFO "READ : %p\n",tempData2);
 		if(rear2 == MAX-1)
 			rear2 = -1;
 		msg2[++rear2] = tempData2[0];
@@ -61,8 +60,7 @@ ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *off
 		bytesWritten++;
 		len--;
 	}
-	printk(KERN_INFO "Minor Number %d wrote %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesWritten);
-	printk(KERN_INFO "Current msg : %s\n",msg2);
+//	printk(KERN_INFO "Minor Number %d wrote %d bytes\n",iminor(filp->f_path.dentry->d_inode),bytesWritten);
 	return bytesWritten; 
 }
 
@@ -119,14 +117,14 @@ static int __init load_module(void)
 		printk(KERN_INFO "Can't Register Device %s \n",DEVICE_NAME);
 		return -EFAULT;
 	}
-	printk(KERN_INFO "Loading the module : iodriver with device id:%d with string %s\n",major,msg1);
+//	printk(KERN_INFO "Loading the module : iodriver with device id:%d with string %s\n",major,msg1);
 
 	return 0;
 }
 
 static void __exit remove_module(void)
 {
-	printk(KERN_INFO "Removing the module : iodriver with string : %s\n",msg2);
+//	printk(KERN_INFO "Removing the module : iodriver with string : %s\n",msg2);
 	unregister_chrdev(major,DEVICE_NAME);
 }
 
