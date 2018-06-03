@@ -10,6 +10,7 @@
 #include <linux/syscalls.h>
 #include <linux/vmalloc.h>
 #include <linux/random.h>
+#include <linux/delay.h>
 
 static int Device_open = 0;
 static int Delay = 0;
@@ -48,6 +49,7 @@ ssize_t device_read(struct file *filp,char *buffer,size_t len,loff_t *offset)
 }
 ssize_t device_write(struct file *filp,const char *buffer,size_t len,loff_t *offset)
 {
+	msleep(Delay);
 	bytesWritten = 0;
 	while(total2 != MAX && len)
 	{

@@ -5,7 +5,7 @@
 
 
 #define DEVICE_NAME "iodriver"
-#define MAX 	 1000000
+#define MAX 	 100000
 #define IOCTL_SET_DELAY _IOR(major,0,int)
 #define IOCTL_GET_DELAY _IOR(major,1,int)
 

@@ -71,10 +71,11 @@ void *func_read(void *arg)
 	while(read(file_desc,temp,1) == 1)
 	{
 		pthread_mutex_lock(&lock);
-		if(rear == MAX-1)
-			rear = -1;
-		if(total < MAX)
+		if(total < len)
 		{
+			if(rear >= len-1)
+				rear = -1;
+//			printf("Rear : %d\n",rear+1);
 			buffer[++rear] = temp[0];
 			total++;
 		}
@@ -93,10 +94,11 @@ void *func_write(void *arg)
 	do
 	{	
 		pthread_mutex_lock(&lock);
-		if(front == MAX)
-			front = 0;
 		if(total > 0)
 		{
+			if(front == len)
+				front = 0;
+//			printf("Front : %d\n",front);
 			temp[0] = buffer[front++];
 			total--;
 		}
@@ -115,9 +117,7 @@ int main()
 		exit(-1);
 	}
 	buffer = NULL;
-	printf("Enter the size for buffer (in bytes) : ");
 	scanf("%d",&len);
-	printf("Enter the delay (in ms) : ");
 	scanf("%d",&Delay);
 	buffer = (char*)malloc(len);
 	if(buffer == NULL)
